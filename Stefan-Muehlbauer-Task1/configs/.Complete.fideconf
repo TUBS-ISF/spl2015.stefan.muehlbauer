@@ -1,0 +1,23 @@
+# Lists all features from the model with manual (first digit) and automatic (second digit) selection
+# 0 = deselected, 1 = selected, 2 = undefined
+21StefanMuehlbauerTask1
+11LIbrary
+21Encoding
+12Huffman
+12ShannonFano
+12Arithmetic
+12Substitution
+21Analysis
+12Console
+11GUI
+21Basic
+21Persistent
+11Logging
+12Filter
+12Update
+12Combination
+12Comparison
+12Documentation
+11Benchmarking
+21TestSet
+12Report

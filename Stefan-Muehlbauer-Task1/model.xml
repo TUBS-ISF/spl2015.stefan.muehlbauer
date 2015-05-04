@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+			<and abstract="true" mandatory="true" name="StefanMuehlbauerTask1">
+				<and abstract="true" mandatory="true" name="LIbrary">
+					<description>
+						This feature adds the library for the application to the software product.
+					</description>
+					<or mandatory="true" name="Encoding">
+						<description>
+							This feature adds several different entropy encondings to the library.
+						</description>
+						<feature mandatory="true" name="Huffman">
+							<description>
+								This feature adds an implementation of the Huffman encoding to the library component.
+							</description>
+						</feature>
+						<feature mandatory="true" name="ShannonFano">
+							<description>
+								This feature adds an implementation of the Shannon-Fano encoding to the library component.
+							</description>
+						</feature>
+						<feature mandatory="true" name="Arithmetic">
+							<description>
+								This feature adds an implementation of the Arithmetic encoding to the library component.
+							</description>
+						</feature>
+						<feature mandatory="true" name="Substitution">
+							<description>
+								This feature adds an implementation for word substitution to the library component.
+							</description>
+						</feature>
+					</or>
+					<feature mandatory="true" name="Analysis">
+						<description>
+							This feature adds the obligatory word frequency analysis to the library.
+						</description>
+					</feature>
+					<feature name="Console">
+						<description>
+							This feature adds optional comand line acces to the library.
+						</description>
+					</feature>
+				</and>
+				<and abstract="true" name="GUI">
+					<description>
+						This feature adds the GUI functionality to the software product.
+					</description>
+					<feature mandatory="true" name="Basic">
+						<description>
+							This feature adds a minimal, but extensible GUI to the software product.
+						</description>
+					</feature>
+					<feature mandatory="true" name="Persistent">
+						<description>
+							This feature adds writing/opening/saving functionality to the software product.
+						</description>
+					</feature>
+					<and name="Logging">
+						<description>
+							This feature adds logging functionality to the GUI.
+						</description>
+						<feature name="Filter">
+							<description>
+								This feature adds an additional filter function to the logging module.
+							</description>
+						</feature>
+					</and>
+					<feature name="Update">
+						<description>
+							In order to stay tuned, this feature adds an update checker to the softwarep product.
+						</description>
+					</feature>
+					<feature name="Combination">
+						<description>
+							This feature adds combination options for different encodings.
+						</description>
+					</feature>
+					<feature name="Comparison">
+						<description>
+							This feature adds a synoptic view to the GUI to compare different texts.
+						</description>
+					</feature>
+					<feature name="Documentation">
+						<description>
+							This feature adds a brief documentation about the different encodings to the software product.
+						</description>
+					</feature>
+				</and>
+				<and abstract="true" name="Benchmarking">
+					<description>
+						This feature adds a component in order to evaluate different encodings.
+					</description>
+					<feature mandatory="true" name="TestSet">
+						<description>
+							This feature adds tests/test sets to the benchmarking component.
+						</description>
+					</feature>
+					<feature name="Report">
+						<description>
+							This feature adds a report functionality to the benchmarking component.
+						</description>
+					</feature>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
