@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 	<featureModel chosenLayoutAlgorithm="1">
 		<struct>
-			<and abstract="true" mandatory="true" name="StefanMuehlbauerTask1">
+			<and abstract="true" mandatory="true" name="FileCompressionTool">
 				<and abstract="true" mandatory="true" name="LIbrary">
 					<description>
 						This feature adds the library for the application to the software product.
