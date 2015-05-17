@@ -1,0 +1,19 @@
+Dokumentation zu Aufgabe 2
+Stand: 17.05.2015
+
+Die beiden Merkmale werden über übergebene Argumente an- oder abgewählt.
+Zur Auswahl stehen die Argumente "compression" und "consoleDocumentation". 
+Ersteres aktiviert die Befehle "compress" und "decompress", welche die (De-)
+Kompression einer Textdatei ermöglichen. Als Parameter erwarten diese eine
+Ausgangs- und eine Zieldatei. Um zu (de-)komprimieren bedarf es einer vorher 
+erstellten Codierung.
+Das zweite Argumemt aktiviert den Befehl "help", welcher, gefolgt von einem
+beliebigen Befehl, Informationen zu diesem liefert.
+
+Verfügbare Befehle:
+- huffman <id> <path>: Erstellt Kodierung <id> basierend auf Datei <path>
+- help <befehl>: siehe oben
+- show <id>: Zeigt die Codierung von <id>
+- load <id>: Lädt <id> als aktuelle Kodierung
+
+
