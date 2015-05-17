@@ -36,11 +36,12 @@
 							This feature adds the obligatory word frequency analysis to the library.
 						</description>
 					</feature>
-					<feature name="Console">
+					<and name="Console">
 						<description>
 							This feature adds optional comand line acces to the library.
 						</description>
-					</feature>
+						<feature name="ConsoleDocumentation"/>
+					</and>
 				</and>
 				<and abstract="true" name="GUI">
 					<description>
