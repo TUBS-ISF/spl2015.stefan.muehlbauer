@@ -42,6 +42,7 @@
 						</description>
 						<feature name="ConsoleDocumentation"/>
 					</and>
+					<feature name="Compression"/>
 				</and>
 				<and abstract="true" name="GUI">
 					<description>
