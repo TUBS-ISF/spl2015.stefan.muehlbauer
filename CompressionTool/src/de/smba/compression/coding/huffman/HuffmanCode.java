@@ -1,10 +1,7 @@
 package de.smba.compression.coding.huffman;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
-
-import de.smba.compression.analysis.Analyser;
 
 public class HuffmanCode {
     public static HuffmanTree buildTree(Map<String, Integer> charFreqs) {
@@ -45,15 +42,5 @@ public class HuffmanCode {
             return container3;
         }
         return null;
-    }
-    
-    public static void main(String[] args) {
-        String test = "((((((((())";
- 
-        Analyser a = Analyser.getInstance();
-        Map<String, Integer> freqs = a.analyseFrequency(test);
-        HuffmanTree tree = buildTree(freqs);
- 
-        System.err.println(exportCoding(tree, new StringBuffer(), new HashMap<String, String>()));
     }
 }

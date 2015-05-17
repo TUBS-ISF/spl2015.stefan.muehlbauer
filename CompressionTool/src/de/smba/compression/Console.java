@@ -1,7 +1,10 @@
 package de.smba.compression;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -12,6 +15,10 @@ import de.smba.compression.coding.huffman.HuffmanCode;
 import de.smba.compression.coding.huffman.HuffmanTree;
 
 public class Console {
+	
+	private static boolean feature_compression = false;
+	private static boolean feature_consoleDocumentation = false;
+	
 	
 	private static final Analyser analyser = Analyser.getInstance();
 	private static final Scanner in = new Scanner(System.in);
@@ -83,10 +90,10 @@ public class Console {
 			} else if (command.startsWith("show")) {
 				System.out.println("	Shows a coding.");
 				System.out.println("	Command 'show' usage: show <CodingIdentifier>");
-			} else if (command.startsWith("compress")) {
+			} else if (feature_compression && command.startsWith("compress")) {
 				System.out.println("	Compresses a file.");
 				System.out.println("	Command 'compress' usage: compress <PathToFileToCompress> <PathToTargetFile>");
-			} else if (command.startsWith("decompress")) {
+			} else if (feature_compression && command.startsWith("decompress")) {
 				System.out.println("	Decompresses a file.");
 				System.out.println("	Command 'decompress' usage: decompress <PathToFileToDeompress> <PathToTargetFile>");
 			} else {
@@ -99,6 +106,15 @@ public class Console {
 	
 	
 	public static void main(String args[]) {
+		
+		/** Runtine feature selection processing */
+		List<String> argList = new ArrayList<String>(Arrays.asList(args));
+		
+		if (argList.contains("compression")) {
+			feature_compression = true;
+		}
+		if (argList.contains("consoleDocumentation"))
+		
 		System.out.println("### Compression Console ###");
 		while (true) {
 			System.out.print("coco >> ");
@@ -107,7 +123,7 @@ public class Console {
 			if (line.startsWith("exit")) {
 				System.out.println("	Terminating.");
 				System.exit(0);
-			} else if (line.startsWith("help")) {
+			} else if (feature_consoleDocumentation && line.startsWith("help")) {
 				delegateHelp(line.substring(5));
 			} else if (line.startsWith("load")) {
 				delegateLoadCoding(line.substring(5));
@@ -117,10 +133,10 @@ public class Console {
 				delegateShow(line.substring(5));
 			} else if (line.startsWith("easter egg")) {
 				System.out.println("	This is not an Easter Egg!");
-			} else if (line.startsWith("compress")) {
+			} else if (feature_compression && line.startsWith("compress")) {
 				System.err.println(line.substring(9));
 				delegateCompress(line.substring(9));
-			} else if (line.startsWith("decompress")) {
+			} else if (feature_compression && line.startsWith("decompress")) {
 				delegateDecompress(line.substring(11));
 			} else {
 				System.out.println("	Command '" + line.split(" ")[0] + "' not valid.");
