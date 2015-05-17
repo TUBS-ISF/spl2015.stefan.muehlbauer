@@ -113,7 +113,9 @@ public class Console {
 		if (argList.contains("compression")) {
 			feature_compression = true;
 		}
-		if (argList.contains("consoleDocumentation"))
+		if (argList.contains("consoleDocumentation")) {
+			feature_consoleDocumentation = true;
+		}
 		
 		System.out.println("### Compression Console ###");
 		while (true) {
@@ -124,22 +126,21 @@ public class Console {
 				System.out.println("	Terminating.");
 				System.exit(0);
 			} else if (feature_consoleDocumentation && line.startsWith("help")) {
-				delegateHelp(line.substring(5));
+				delegateHelp(line.substring(4).trim());
 			} else if (line.startsWith("load")) {
-				delegateLoadCoding(line.substring(5));
+				delegateLoadCoding(line.substring(4).trim());
 			} else if (line.startsWith("huffman")) {
-				delegateBuildHuffmanCoding(line.substring(7));
+				delegateBuildHuffmanCoding(line.substring(6).trim());
 			} else if (line.startsWith("show")) {
-				delegateShow(line.substring(5));
+				delegateShow(line.substring(4).trim());
 			} else if (line.startsWith("easter egg")) {
 				System.out.println("	This is not an Easter Egg!");
 			} else if (feature_compression && line.startsWith("compress")) {
-				System.err.println(line.substring(9));
-				delegateCompress(line.substring(9));
+				delegateCompress(line.substring(8).trim());
 			} else if (feature_compression && line.startsWith("decompress")) {
-				delegateDecompress(line.substring(11));
+				delegateDecompress(line.substring(10).trim());
 			} else {
-				System.out.println("	Command '" + line.split(" ")[0] + "' not valid.");
+				System.out.println("	Command '" + line.split(" ")[0] + "' not found.");
 			}
 		}
 	}
