@@ -1,8 +1,5 @@
 package de.smba.compression.coding;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public class Compressor {

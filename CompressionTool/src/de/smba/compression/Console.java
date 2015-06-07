@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import de.smba.compression.analysis.Analyser;
+import de.smba.compression.coding.CodingFactory;
 import de.smba.compression.coding.CodingStore;
 import de.smba.compression.coding.Compressor;
 import de.smba.compression.coding.huffman.HuffmanCode;
@@ -38,7 +39,12 @@ public class Console {
 	private static final Analyser analyser = Analyser.getInstance();
 	private static final Scanner in = new Scanner(System.in);
 	private static final CodingStore store = new CodingStore();
-	
+		
+	/*
+	 * Method is not used anymore, since the coding generation is no handled by the
+	 * compression method directly.
+	 */
+	@Deprecated
 	public static void delegateBuildHuffmanCoding(String command) {
 		
 		if (command.length() != 0) {
@@ -132,10 +138,13 @@ public class Console {
 //@	public static void delegateCompress(String command) {	
 	//#endif
 		if (command.length() != 0) {
-			Map<String, String> coding = store.getCoding(store.getCurrent());
+			
 			
 			String source 	= command.split(" ")[0];
 			String target	= command.split(" ")[1];
+			
+			Map<String, String> coding = CodingFactory.buildHuffmanCoding(source);
+			store.addCoding(target, coding); 
 			
 			String toEncode = null;
 			
@@ -148,13 +157,17 @@ public class Console {
 			String compressed = Compressor.compress(coding, toEncode);
 			
 			//#ifdef BENCHMARKING
-			double ratio = 1 - (compressed.length() * 1.0 / toEncode.length()) * 100; 
+			double ratio = -1* (1 - (compressed.length()/8.0 * 1.0 / toEncode.length()) * 100); 
 			System.out.println("	Compression reduced size by " + ratio + "%.");			
 			//#endif
 			
 			try {
-				FileHandler.storeFile(target, compressed);
 				
+				/*
+				 * Old version
+				 * FileHandler.storeFile(target, compressed);
+				 */
+				FileHandler.storeCompressedFile(target, compressed, store.getAnticoding(store.getCurrent()));
 				
 				//#ifdef BENCHMARKING
 				return ratio;
@@ -187,7 +200,7 @@ public class Console {
 				return;
 			}
 			
-			String compressed = Compressor.decompress(anticoding, toDecode);
+			String compressed = FileHandler.loadCompressedFile(source);//Compressor.decompress(anticoding, toDecode);
 			
 			try {
 				FileHandler.storeFile(target, compressed);
@@ -205,26 +218,29 @@ public class Console {
 	 * This method encapsulates the test run functionality. 
 	 */
 	//#if TESTRUN && BENCHMARKING
-	public static void delegateTest(String command) {
+	public static void delegateTest() {
 		
 		/** Retrieves the test set path*/
 		String testSetPath = CompressionConfig.getTestSetPath();
+		String p = System.getProperty("user.dir") + "/" + testSetPath;
+		p = p.replace("\n", "");
 		
-		File f = new File(testSetPath);
+		File f = new File(p);
+		
 		ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
 		
 		double ratio = 0.0;
 		
 		for (File file : files) {
 			
-			/* Build a Huffman coding for every test case */
-			Console.delegateBuildHuffmanCoding(System.currentTimeMillis() + " " + file.getAbsolutePath());
+			System.out.println("");
+			System.out.println("	Compressing " + file.getAbsolutePath());
 			
 			/* Compress all test files */ 
 			ratio += Console.delegateCompress(file.getAbsolutePath() + " " + testSetPath + "/compressed/" + file.getName());
 		}
 		
-		System.out.println("	Test run on " + files.size() + " elements achieved an average compression rate of " + ratio/files.size() + " %.");
+		System.out.println("\n	Test run on " + files.size() + " elements achieved an average compression rate of " + ratio/files.size() + " %.");
 	}
 	//#endif
 
@@ -257,7 +273,13 @@ public static void main(String args[]) {
 				delegateShow(line.substring(4).trim());
 			} else if (line.startsWith("easter egg")) {
 				System.out.println("	This is not an Easter Egg!");
-			} else if (line.startsWith("compress")) {
+			} else if (line.startsWith("testrun")) {
+				//#ifdef TESTRUN
+				delegateTest();
+				//#else
+//@				System.out.println("	Command '" + line.split(" ")[0] + "' not available since the feature TESTRUN is not selected.");
+				//#endif
+			}else if (line.startsWith("compress")) {
 				//#ifdef COMPRESSION
 				delegateCompress(line.substring(8).trim());
 				//#else
