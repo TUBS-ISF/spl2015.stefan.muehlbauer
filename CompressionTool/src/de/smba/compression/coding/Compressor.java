@@ -33,10 +33,4 @@ public class Compressor {
 		
 		return decoded.toString();
 	}
-	
-	public static void storeFile(String path, String text) throws FileNotFoundException, UnsupportedEncodingException {
-		PrintWriter writer = new PrintWriter(path, "UTF-8");
-		writer.write(text);
-		writer.close();
-	}
 }

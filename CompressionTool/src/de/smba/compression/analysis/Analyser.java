@@ -3,9 +3,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,6 +53,7 @@ public class Analyser {
 	        sb.append(System.lineSeparator());
 	        line = br.readLine();
 		}
+		br.close();
 	    return sb.toString();
 	}
 	
