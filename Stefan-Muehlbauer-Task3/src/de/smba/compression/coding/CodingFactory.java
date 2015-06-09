@@ -10,7 +10,7 @@ import de.smba.compression.coding.huffman.HuffmanTree;
 
 public class CodingFactory {
 	private static final Analyser analyser = Analyser.getInstance();
-	
+
 	public static Map<String, String> buildHuffmanCoding(String path) {
 		String text = null;
 		try {
@@ -18,10 +18,11 @@ public class CodingFactory {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		Map<String, Integer> frequency = analyser.analyseFrequency(text);
 		HuffmanTree tree = HuffmanCode.buildTree(frequency);
-		return HuffmanCode.exportCoding(tree, new StringBuffer(), new HashMap<String, String>());
+		return HuffmanCode.exportCoding(tree, new StringBuffer(),
+				new HashMap<String, String>());
 	}
-	
+
 }

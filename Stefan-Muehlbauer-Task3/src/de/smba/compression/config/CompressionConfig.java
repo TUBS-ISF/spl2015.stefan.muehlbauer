@@ -9,19 +9,20 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
 /**
  * 
  * @author Stefan Mühlbauer
  *
  */
 public class CompressionConfig {
-	
+
 	public static String getTestSetPath() {
 		try {
 
-			File fXmlFile = new File("bin/de/smba/compression/config/config.xml");
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			File fXmlFile = new File(
+					"bin/de/smba/compression/config/config.xml");
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
 
@@ -31,12 +32,12 @@ public class CompressionConfig {
 
 			if (nList.getLength() == 1) {
 				Node testsetpath = nList.item(0);
-				
+
 				if (testsetpath.getNodeType() == Node.ELEMENT_NODE) {
 					String path = testsetpath.getTextContent();
 					return path;
 				}
-				
+
 			} else {
 				return null;
 			}
@@ -45,7 +46,7 @@ public class CompressionConfig {
 		}
 		return null;
 	}
-	
+
 	public static void main(String args[]) {
 		System.err.println(CompressionConfig.getTestSetPath());
 	}
