@@ -51,32 +51,33 @@ public class FileHandler {
 	 * @param path
 	 * @param compressed
 	 * @param anticoding
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public static void storeCompressedFile(String path, String compressed,
 			Map<String, String> anticoding) throws IOException {
-		
+
 		String serialisedAnticoding = serialise((Serializable) anticoding);
-		
-		Document doc = XMLConstructor.constructFile(compressed, serialisedAnticoding); 
+
+		Document doc = XMLConstructor.constructFile(compressed,
+				serialisedAnticoding);
 
 		try {
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			TransformerFactory transformerFactory = TransformerFactory
+					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 
 			StreamResult result = new StreamResult(new File(path));
 			transformer.transform(source, result);
 		} catch (Exception e) {
-			
-			//e.printStackTrace();
+
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public static String loadCompressedFile(String path) {
 		try {
-						
+
 			String anticodingSerialised = getAnticodingSerialised(path);
 			String compressed = getCompressed(path);
 
@@ -87,119 +88,96 @@ public class FileHandler {
 			} else {
 				throw new IOException();
 			}
-			
-			
-			String decompressed = Compressor.decompress(anticodingDeserialised, compressed);
-			
+
+			String decompressed = Compressor.decompress(anticodingDeserialised,
+					compressed);
+
 			return decompressed;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
-	public static void main(String[] args) {
-		//storeCompressedFile("benerXML.xml", "12345", new HashMap<String, String>());
-		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("a", "10");
-		map.put("b", "130");
-		
-		String serialised;
-		try {
-			serialised = serialise((Serializable) map);
-			System.out.println(deserialise(serialised));
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		//System.err.println(fromString(serialised));
+
+	/** Read the object from Base64 string. */
+	private static Object deserialise(String s) throws IOException,
+			ClassNotFoundException {
+		byte[] data = Base64.getDecoder().decode(s);
+		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
+				data));
+		Object o = ois.readObject();
+		ois.close();
+		return o;
 	}
-	
 
-	 /** Read the object from Base64 string. */
-	   private static Object deserialise( String s ) throws IOException ,
-	                                                       ClassNotFoundException {
-	        byte [] data = Base64.getDecoder().decode( s );
-	        ObjectInputStream ois = new ObjectInputStream( 
-	                                        new ByteArrayInputStream(  data ) );
-	        Object o  = ois.readObject();
-	        ois.close();
-	        return o;
-	   }
+	/** Write the object to a Base64 string. */
+	private static String serialise(Serializable o) throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ObjectOutputStream oos = new ObjectOutputStream(baos);
+		oos.writeObject(o);
+		oos.close();
+		return Base64.getEncoder().encodeToString(baos.toByteArray());
 
-	    /** Write the object to a Base64 string. */
-	    private static String serialise( Serializable o ) throws IOException {
-	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	        ObjectOutputStream oos = new ObjectOutputStream( baos );
-	        oos.writeObject( o );
-	        oos.close();
-	        return Base64.getEncoder().encodeToString(baos.toByteArray()); 
-	    
-	    }
-	    
-	    public static String getCompressed(String path) {
-			try {
+	}
 
-				File fXmlFile = new File(path);
-				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-				Document doc = dBuilder.parse(fXmlFile);
+	public static String getCompressed(String path) {
+		try {
 
-				doc.getDocumentElement().normalize();
+			File fXmlFile = new File(path);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
 
-				NodeList nList = doc.getElementsByTagName("compressed");
+			doc.getDocumentElement().normalize();
 
-				if (nList.getLength() == 1) {
-					Node testsetpath = nList.item(0);
-					
-					if (testsetpath.getNodeType() == Node.ELEMENT_NODE) {
-						String compressed = testsetpath.getTextContent();
-						return compressed;
-					}
-					
-				} else {
-					return null;
+			NodeList nList = doc.getElementsByTagName("compressed");
+
+			if (nList.getLength() == 1) {
+				Node testsetpath = nList.item(0);
+
+				if (testsetpath.getNodeType() == Node.ELEMENT_NODE) {
+					String compressed = testsetpath.getTextContent();
+					return compressed;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
+
+			} else {
+				return null;
 			}
-			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-	    
-	    public static String getAnticodingSerialised(String path) {
-			try {
+		return null;
+	}
 
-				File fXmlFile = new File(path);
-				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-				Document doc = dBuilder.parse(fXmlFile);
+	public static String getAnticodingSerialised(String path) {
+		try {
 
-				doc.getDocumentElement().normalize();
+			File fXmlFile = new File(path);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
 
-				NodeList nList = doc.getElementsByTagName("anticoding");
+			doc.getDocumentElement().normalize();
 
-				if (nList.getLength() == 1) {
-					Node testsetpath = nList.item(0);
-					
-					if (testsetpath.getNodeType() == Node.ELEMENT_NODE) {
-						String anticoding = testsetpath.getTextContent();
-						return anticoding;
-					}
-					
-				} else {
-					return null;
+			NodeList nList = doc.getElementsByTagName("anticoding");
+
+			if (nList.getLength() == 1) {
+				Node testsetpath = nList.item(0);
+
+				if (testsetpath.getNodeType() == Node.ELEMENT_NODE) {
+					String anticoding = testsetpath.getTextContent();
+					return anticoding;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
+
+			} else {
+				return null;
 			}
-			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return null;
+	}
 }
