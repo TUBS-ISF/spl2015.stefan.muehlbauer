@@ -1,7 +1,10 @@
 package de.smba.compression;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
+//#ifdef TestSet
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -9,16 +12,9 @@ import de.smba.compression.analysis.Analyser;
 import de.smba.compression.coding.CodingFactory;
 import de.smba.compression.coding.CodingStore;
 import de.smba.compression.coding.Compressor;
-import de.smba.compression.coding.huffman.HuffmanCode;
-import de.smba.compression.coding.huffman.HuffmanTree;
-import de.smba.compression.file.FileHandler;
-
-//#ifdef TestSet
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.io.File;
 import de.smba.compression.config.CompressionConfig;
 //#endif
+import de.smba.compression.file.FileHandler;
 
 
 public class Console {
@@ -143,20 +139,11 @@ public class Console {
 	
 	public static void delegateDecompress(String command) {
 		if (command.length() != 0) {
-			Map<String, String> anticoding = store.getAnticoding(store.getCurrent());
-			
+
 			String source 	= command.split(" ")[0];
 			String target	= command.split(" ")[1];
-			
-			String toDecode;
-			try {
-				toDecode = analyser.loadFile(source);
-			} catch (IOException e) {
-				System.out.println("	Path '" + source + "' seems to be invalid! Try again!");
-				return;
-			}
-			
-			String compressed = FileHandler.loadCompressedFile(source);//Compressor.decompress(anticoding, toDecode);
+					
+			String compressed = FileHandler.loadCompressedFile(source);
 			
 			try {
 				FileHandler.storeFile(target, compressed);
