@@ -1,7 +1,12 @@
 eclipse.preferences.version=1
 encoding//configs/.Complete.fideconf=UTF-8
+encoding//configs/.NonValid.fideconf=UTF-8
 encoding//configs/.consoleApplication.fideconf=UTF-8
+encoding//configs/.decompressionOnly.fideconf=UTF-8
 encoding//configs/.default.fideconf=UTF-8
+encoding//configs/.developer.fideconf=UTF-8
 encoding//configs/.library.fideconf=UTF-8
 encoding//configs/.user.fideconf=UTF-8
+encoding//configs/.userBenchmarking.fideconf=UTF-8
 encoding//configs/.userExtended.fideconf=UTF-8
+encoding//configs/.userWoBenchmarking.fideconf=UTF-8

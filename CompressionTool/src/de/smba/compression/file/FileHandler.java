@@ -1,4 +1,4 @@
-package file;
+package de.smba.compression.file;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

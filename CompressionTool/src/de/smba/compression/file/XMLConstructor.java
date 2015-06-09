@@ -1,4 +1,4 @@
-package file;
+package de.smba.compression.file;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

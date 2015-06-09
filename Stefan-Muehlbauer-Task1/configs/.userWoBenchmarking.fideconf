@@ -1,0 +1,25 @@
+# Lists all features from the model with manual (first digit) and automatic (second digit) selection
+# 0 = deselected, 1 = selected, 2 = undefined
+21FileCompressionTool
+21LIbrary
+21Encoding
+12Huffman
+22ShannonFano
+22Arithmetic
+21Analysis
+21Console
+12ConsoleDocumentation
+12Compression
+12Decompression
+22GUI
+22Basic
+22Persistent
+22Logging
+22Filter
+22Update
+22Combination
+22Comparison
+22Documentation
+22Benchmarking
+22Report
+22TestSet

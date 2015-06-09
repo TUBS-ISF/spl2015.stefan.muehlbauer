@@ -97,11 +97,11 @@
 					<description>
 						This feature adds a component in order to evaluate different encodings.
 					</description>
-					<and coordinates="1024, 140" mandatory="true" name="Report">
+					<and coordinates="994, 136" name="Report">
 						<description>
 							This feature adds a report functionality to the benchmarking component.
 						</description>
-						<feature coordinates="1025, 190" name="TestSet">
+						<feature coordinates="998, 191" name="TestSet">
 							<description>
 								This feature adds tests/test sets to the benchmarking component.
 							</description>

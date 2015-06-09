@@ -1,9 +1,6 @@
 package de.smba.compression;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -14,26 +11,29 @@ import de.smba.compression.coding.CodingStore;
 import de.smba.compression.coding.Compressor;
 import de.smba.compression.coding.huffman.HuffmanCode;
 import de.smba.compression.coding.huffman.HuffmanTree;
-import de.smba.compression.config.CompressionConfig;
 import de.smba.compression.file.FileHandler;
+
+//#ifdef TestSet
+//@import java.util.ArrayList;
+//@import java.util.Arrays;
+//@import java.io.File;
+//@import de.smba.compression.config.CompressionConfig;
+//#endif
+
 
 public class Console {
 	
 	/*
 	 * Antenna preprocessor directives for the four features
-	 * REPORT	: Any compression run provides the ratio of compressed and original file
-	 * CONSOLE_DOC	: Provides brief information on each command
-	 * COMPRESSION	: Provides the compression functionality/command
-	 * TESTSET		: Provides a test run and returns the aveerage ratio of compressed and original file
+	 * Report	: Any Compression run provides the ratio of compressed and original file
+	 * ConsoleDpcumentation	: Provides brief information on each command
+	 * Compression	: Provides the Compression functionality/command
+	 * TestSet		: Provides a test run and returns the aveerage ratio of compressed and original file
 	 */
-	//#define REPORT
-	//#define CONSOLE_DOC
-	//#define COMPRESSION
-	//#define TESTSET
 	
 	/*
 	 * VALIDITY CONSTRAINTS (implemented in main())
-	 * (TESTSET => REPORT) && (REPORT => COMPRESSION)
+	 * (TestSet => Report) && (Report => Compression)
 	 */
 	
 	private static final Analyser analyser = Analyser.getInstance();
@@ -42,7 +42,7 @@ public class Console {
 		
 	/*
 	 * Method is not used anymore, since the coding generation is no handled by the
-	 * compression method directly.
+	 * Compression method directly.
 	 */
 	@Deprecated
 	public static void delegateBuildHuffmanCoding(String command) {
@@ -115,11 +115,11 @@ public class Console {
 				System.out.println("	Shows a coding.");
 				System.out.println("	Command 'show' usage: show <CodingIdentifier>");
 			} else if (command.startsWith("compress")) {
-				//#ifdef COMPRESSION
-				System.out.println("	Compresses a file.");
-				System.out.println("	Command 'compress' usage: compress <PathToFileToCompress> <PathToTargetFile>");
+				//#ifdef Compression
+//@				System.out.println("	Compresses a file.");
+//@				System.out.println("	Command 'compress' usage: compress <PathToFileToCompress> <PathToTargetFile>");
 				//#else
-//@				System.out.println("	Help on command compress is not available since the feature COMPRESSION is not selected");
+				System.out.println("	Help on command compress is not available since the feature Compression is not selected");
 				//#endif
 			} else if (command.startsWith("decompress")) {
 				System.out.println("	Decompresses a file.");
@@ -132,10 +132,10 @@ public class Console {
 		}
 	}
 	
-	//#ifdef REPORT
-	public static double delegateCompress(String command) {
+	//#ifdef Report
+//@	public static double delegateCompress(String command) {
 	//#else
-//@	public static void delegateCompress(String command) {	
+	public static void delegateCompress(String command) {	
 	//#endif
 		if (command.length() != 0) {
 			
@@ -156,9 +156,9 @@ public class Console {
 			
 			String compressed = Compressor.compress(coding, toEncode);
 			
-			//#ifdef REPORT
-			double ratio = -1* (1 - (compressed.length()/8.0 * 1.0 / toEncode.length()) * 100); 
-			System.out.println("	Compression reduced size by " + ratio + "%.");			
+			//#ifdef Report
+//@			double ratio = -1* (1 - (compressed.length()/8.0 * 1.0 / toEncode.length()) * 100); 
+//@			System.out.println("	Compression reduced size by " + ratio + "%.");			
 			//#endif
 			
 			try {
@@ -169,8 +169,8 @@ public class Console {
 				 */
 				FileHandler.storeCompressedFile(target, compressed, store.getAnticoding(store.getCurrent()));
 				
-				//#ifdef REPORT
-				return ratio;
+				//#ifdef Report
+//@				return ratio;
 				//#endif
 				
 			} catch (Exception e) {
@@ -180,8 +180,8 @@ public class Console {
 		} else {
 			System.out.println("	No path specified!");
 		}
-		//#ifdef REPORT
-		return 0.0;
+		//#ifdef Report
+//@		return 0.0;
 		//#endif
 	}
 	
@@ -217,39 +217,39 @@ public class Console {
 	/**
 	 * This method encapsulates the test run functionality. 
 	 */
-	//#if TESTSET && REPORT
-	public static void delegateTest() {
-		
-		/** Retrieves the test set path*/
-		String testSetPath = CompressionConfig.getTestSetPath();
-		String p = System.getProperty("user.dir") + "/" + testSetPath;
-		p = p.replace("\n", "");
-		
-		File f = new File(p);
-		
-		ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
-		
-		double ratio = 0.0;
-		
-		for (File file : files) {
-			
-			System.out.println("");
-			System.out.println("	Compressing " + file.getAbsolutePath());
-			
-			/* Compress all test files */ 
-			ratio += Console.delegateCompress(file.getAbsolutePath() + " " + testSetPath + "/compressed/" + file.getName());
-		}
-		
-		System.out.println("\n	Test run on " + files.size() + " elements achieved an average compression rate of " + ratio/files.size() + " %.");
-	}
+	//#if TestSet && Report
+//@	public static void delegateTest() {
+//@		
+//@		/** Retrieves the test set path*/
+//@		String TestSetPath = CompressionConfig.getTestSetPath();
+//@		String p = System.getProperty("user.dir") + "/" + TestSetPath;
+//@		p = p.replace("\n", "");
+//@		
+//@		File f = new File(p);
+//@		
+//@		ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
+//@		
+//@		double ratio = 0.0;
+//@		
+//@		for (File file : files) {
+//@			
+//@			System.out.println("");
+//@			System.out.println("	Compressing " + file.getAbsolutePath());
+//@			
+//@			/* Compress all test files */ 
+//@			ratio += Console.delegateCompress(file.getAbsolutePath() + " " + TestSetPath + "/compressed/" + file.getName());
+//@		}
+//@		
+//@		System.out.println("\n	Test run on " + files.size() + " elements achieved an average Compression rate of " + ratio/files.size() + " %.");
+//@	}
 	//#endif
 
 public static void main(String args[]) {
 	
 		/*
-		 * Validation of the feature constraints (TESTSET => REPORT) & (REPORT => COMPRESSION)
+		 * Validation of the feature constraints (TestSet => Report) & (Report => Compression)
 		 */
-		//#if (!TESTSET || REPORT) && (!REPORT || COMPRESSION)
+		//#if (!TestSet || Report) && (!Report || Compression)
 	
 		System.out.println("### Compression Console ###");
 		while (true) {
@@ -260,10 +260,10 @@ public static void main(String args[]) {
 				System.out.println("	Terminating.");
 				System.exit(0);
 			} else if (line.startsWith("help")) {
-				//#ifdef CONSOLE_DOC
-				delegateHelp(line.substring(4).trim());
+				//#ifdef ConsoleDpcumentation
+//@				delegateHelp(line.substring(4).trim());
 				//#else
-//@				System.out.println("	Command '" + line.split(" ")[0] + "' not available since the feature CONSOLE_DOC is not selected.");
+				System.out.println("	Command '" + line.split(" ")[0] + "' not available since the feature ConsoleDpcumentation is not selected.");
 				//#endif
 			} else if (line.startsWith("load")) {
 				delegateLoadCoding(line.substring(4).trim());
@@ -273,17 +273,17 @@ public static void main(String args[]) {
 				delegateShow(line.substring(4).trim());
 			} else if (line.startsWith("easter egg")) {
 				System.out.println("	This is not an Easter Egg!");
-			} else if (line.startsWith("TESTSET")) {
-				//#ifdef TESTSET
-				delegateTest();
+			} else if (line.startsWith("TestSet")) {
+				//#ifdef TestSet
+//@				delegateTest();
 				//#else
-//@				System.out.println("	Command '" + line.split(" ")[0] + "' not available since the feature TESTSET is not selected.");
+				System.out.println("	Command '" + line.split(" ")[0] + "' not available since the feature TestSet is not selected.");
 				//#endif
 			}else if (line.startsWith("compress")) {
-				//#ifdef COMPRESSION
-				delegateCompress(line.substring(8).trim());
+				//#ifdef Compression
+//@				delegateCompress(line.substring(8).trim());
 				//#else
-//@				System.out.println("	Command '" + line.split(" ")[0] + "' not available since the feature COMPRESSION is not selected.");
+				System.out.println("	Command '" + line.split(" ")[0] + "' not available since the feature Compression is not selected.");
 				//#endif
 				
 			} else if (line.startsWith("decompress")) {
