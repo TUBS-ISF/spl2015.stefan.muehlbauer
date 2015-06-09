@@ -1,4 +1,4 @@
-SPL Aufgabe 3, Stand: 08.06.2015
+SPL Aufgabe 3, Stand: 09.06.2015
 
 Die folgenden vier Features können an- oder abgewählt werden: Compression, Report, Testset, ConsoleDoc. 
 
@@ -6,6 +6,6 @@ Die folgenden fünf Konfigurationen wurden erstellt:
 
 compressionOnly: Es steht nur Funktionalität zum Dekomprimieren von Dateien zu Verfügung.
 Developer: Es stehen alle Features zur Verfügung, welche somit evaluiert werden können.
-NonValid: Diese Konfiguration ist nicht valide, jedoch interessant, um die Constraints über die anzuwählenden Features zu testen.
+Minimum: Keines der Feature ist angewählt, es steht nur minimale Funktionalität zur Verrfügung
 UserBenchmarking: Die Grundfunktionalität ist vorhanden, jedoch fehlt der Testrun.
 UserWoBenchmarking: Die Grundfunktionalität ist vorhanden, jedoch werden keinerlei Informationen zur Kompressionsrate berechnet.
