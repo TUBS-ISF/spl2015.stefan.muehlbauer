@@ -7,9 +7,9 @@
 22ShannonFano
 22Arithmetic
 21Analysis
-22Console
-22ConsoleDocumentation
-22Compression
+11Console
+12ConsoleDocumentation
+12Compression
 22Decompression
 22GUI
 22Basic
@@ -20,6 +20,6 @@
 22Combination
 22Comparison
 22Documentation
-22Benchmarking
-22Report
-22TestSet
+11Benchmarking
+11Report
+12TestSet
