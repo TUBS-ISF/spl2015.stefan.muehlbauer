@@ -9,9 +9,11 @@ import de.smba.compression.coding.HuffmanCodingFactory;
 import de.smba.compression.file.FileHandler;
 import de.smba.compression.file.IFileHandler;
 import de.smba.compression.frontend.Console;
+import de.smba.compression.frontend.GUI;
 import de.smba.compression.frontend.IFrontend;
 import de.smba.compression.frontend.benchmarking.ConsoleBenchmarker;
 import de.smba.compression.frontend.documentation.ConsoleDocumenter;
+import de.smba.compression.frontend.documentation.GUIDocumenter;
 
 /**
  * This product connects the different components via glue code in order to
@@ -29,12 +31,21 @@ import de.smba.compression.frontend.documentation.ConsoleDocumenter;
  */
 public class Product {
 
+	/** Frontend instance used */
 	private IFrontend frontend;
 
+	/**
+	 * Constructor for the Compression Tool product variant.
+	 * @param IFrontend instance
+	 */
 	public Product(IFrontend frontend) {
 		this.frontend = frontend;
 	}
 
+	/**
+	 * Every IFrontend instance implements a run() method since it 
+	 * implements the Runnable interface
+	 */
 	public void start() {
 		this.frontend.run();
 	}
@@ -49,6 +60,10 @@ public class Product {
 						analyser, fileHandler), new ConsoleDocumenter(),
 				new ConsoleBenchmarker()));
 
-		console.start();
+		//console.start();
+		
+		Product gui = new Product(new GUI(new GUIDocumenter()));
+		
+		gui.start();
 	}
 }
