@@ -10,6 +10,7 @@ import de.smba.compression.file.FileHandler;
 import de.smba.compression.file.IFileHandler;
 import de.smba.compression.frontend.Console;
 import de.smba.compression.frontend.IFrontend;
+import de.smba.compression.frontend.benchmarking.ConsoleBenchmarker;
 import de.smba.compression.frontend.documentation.ConsoleDocumenter;
 
 /**
@@ -36,12 +37,12 @@ public class Product {
 		IFileHandler fileHandler = new FileHandler(new Decompressor());
 		
 		Product console = new Product(new Console(
-				analyser,
 				new CodingStore(),
 				fileHandler,
 				new Compressor(),
 				new HuffmanCodingFactory(analyser, fileHandler),
-				new ConsoleDocumenter()
+				new ConsoleDocumenter(),
+				new ConsoleBenchmarker()
 				));
 		
 		console.start();

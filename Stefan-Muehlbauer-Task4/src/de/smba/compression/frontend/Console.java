@@ -1,45 +1,41 @@
 package de.smba.compression.frontend;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 
-import de.smba.compression.analysis.IAnalyser;
 import de.smba.compression.coding.EmptyCompressor;
 import de.smba.compression.coding.ICodingFactory;
 import de.smba.compression.coding.ICodingStore;
 import de.smba.compression.coding.ICompressor;
-import de.smba.compression.config.CompressionConfig;
 import de.smba.compression.file.IFileHandler;
+import de.smba.compression.frontend.benchmarking.AbstractConsoleBenchmarker;
 import de.smba.compression.frontend.documentation.EmptyDocumenter;
 import de.smba.compression.frontend.documentation.IConsoleDocumenter;
 
 
 public class Console implements IFrontend {
 
-	private IAnalyser analyser;
 	private IFileHandler fileHandler;
 	private ICompressor compressor;
 	private ICodingStore store;
 	private IConsoleDocumenter consoleDocumenter;
+	private AbstractConsoleBenchmarker benchmarker;
 	
 	private Collection<ICodingFactory> codingFactories;
 	private ICodingFactory currentCodingFactory;
 	
 	private Scanner in;
 		
-	public Console(IAnalyser analyser, ICodingStore store, IFileHandler fileHandler, ICompressor compressor, ICodingFactory initialCodingFactory, IConsoleDocumenter consoleDocumenter) {
-		this.analyser = analyser;
+	public Console(ICodingStore store, IFileHandler fileHandler, ICompressor compressor, ICodingFactory initialCodingFactory, IConsoleDocumenter consoleDocumenter, AbstractConsoleBenchmarker consoleBenchmarker) {
 		this.in =  new Scanner(System.in);
 		this.store = store;
 		this.fileHandler = fileHandler;
 		this.compressor = compressor;
 		this.consoleDocumenter = consoleDocumenter;
+		this.benchmarker = consoleBenchmarker;
 		
 		this.codingFactories = new HashSet<ICodingFactory>();
 		this.codingFactories.add(initialCodingFactory);
@@ -73,16 +69,12 @@ public class Console implements IFrontend {
 		}
 	}
 	
-	public void delegateHelp(String command) {
-		
-	}
-	
 
-	public double delegateCompress(String command) {
+	public void delegateCompress(String command) {
 
 		if (this.compressor instanceof EmptyCompressor) {
 			System.out.println("	Help on command compress is not available since the feature Compression is not selected");
-			return 1.0;
+			return;
 		}
 		
 		if (command.length() != 0) {
@@ -103,18 +95,15 @@ public class Console implements IFrontend {
 			
 			String compressed = this.compressor.compress(coding, toEncode);
 			
-			//#ifdef Report
-			double ratio = -1* (1 - (compressed.length()/8.0 * 1.0 / toEncode.length()) * 100); 
-			System.out.println("	Compression reduced size by " + ratio + "%.");			
-			//#endif
+			/**
+			 * Benchmarking implementation optional
+			 */
+			benchmarker.benchmark(toEncode, compressed);
 			
 			try {
 				
 				this.fileHandler.storeCompressedFile(target, compressed, store.getAnticoding(store.getCurrent()));
-				
-				//#ifdef Report
-				return ratio;
-				//#endif
+				return;				
 				
 			} catch (Exception e) {
 				System.out.println("	Path '" + target + "' seems to be invalid or something did not work! Try again!");
@@ -123,9 +112,6 @@ public class Console implements IFrontend {
 		} else {
 			System.out.println("	No path specified!");
 		}
-		//#ifdef Report
-		return 0.0;
-		//#endif
 	}
 	//#endif
 	
@@ -149,36 +135,6 @@ public class Console implements IFrontend {
 		}
 	}
 	
-	/**
-	 * This method encapsulates the test run functionality. 
-	 */
-	//#if TestSet && Report
-	public void delegateTest() {
-		
-		/** Retrieves the test set path*/
-		String TestSetPath = CompressionConfig.getTestSetPath();
-		String p = System.getProperty("user.dir") + "/" + TestSetPath;
-		p = p.replace("\n", "");
-		
-		File f = new File(p);
-		
-		ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
-		
-		double ratio = 0.0;
-		
-		for (File file : files) {
-			
-			System.out.println("");
-			System.out.println("	Compressing " + file.getAbsolutePath());
-			
-			/* Compress all test files */ 
-			ratio += delegateCompress(file.getAbsolutePath() + " " + TestSetPath + "/compressed/" + file.getName());
-		}
-		
-		System.out.println("\n	Test run on " + files.size() + " elements achieved an average Compression rate of " + ratio/files.size() + " %.");
-	}
-	//#endif
-
 
 	public void run() {
 		/*
@@ -207,13 +163,7 @@ public class Console implements IFrontend {
 				delegateShow(line.substring(4).trim());
 			} else if (line.startsWith("easter egg")) {
 				System.out.println("	This is not an Easter Egg!");
-			} else if (line.startsWith("TestSet")) {
-				//#ifdef TestSet
-				delegateTest();
-				//#else
-//@				System.out.println("	Command '" + line.split(" ")[0] + "' not available since the feature TestSet is not selected.");
-				//#endif
-			}else if (line.startsWith("compress")) {
+			} else if (line.startsWith("compress")) {
 				//#ifdef Compression
 				delegateCompress(line.substring(8).trim());
 				//#else
