@@ -15,17 +15,25 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import de.smba.compression.frontend.documentation.GUIDocumenter;
 import de.smba.compression.frontend.documentation.IGUIDocumenter;
 
 public class GUI extends JFrame implements IFrontend {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private IGUIDocumenter guiDocumenter;
 
 	/**
 	 * Create the frame.
 	 */
-	public GUI() {
+	public GUI(IGUIDocumenter guiDocumenter) {
+		
+		this.guiDocumenter = guiDocumenter;
+		
 		setTitle("CoCo Compression Console UI");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -91,7 +99,7 @@ public class GUI extends JFrame implements IFrontend {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI frame = new GUI();
+					GUI frame = new GUI(new GUIDocumenter());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

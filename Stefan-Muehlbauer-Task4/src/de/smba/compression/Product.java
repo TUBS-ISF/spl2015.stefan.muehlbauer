@@ -14,37 +14,41 @@ import de.smba.compression.frontend.benchmarking.ConsoleBenchmarker;
 import de.smba.compression.frontend.documentation.ConsoleDocumenter;
 
 /**
- * This product connects the different components via glue code
- * in order to derive a valid product.
+ * This product connects the different components via glue code in order to
+ * derive a valid product.
+ * 
+ * Features which are to (de-)select comprise:
+ * - Console (excludes GUI)
+ * - GUI (excludes Console)
+ * - ConsoleDocumentation (requires Console)
+ * - GUIDocumentation (requires GUI)
+ * - Compression
+ * - Benchmarking (requires Compression))
+ * 
  * @author Stefan Mühlbauer <s.muehlbauer@student.ucc.ie>
- 
  */
 public class Product {
-	
+
 	private IFrontend frontend;
-	
+
 	public Product(IFrontend frontend) {
 		this.frontend = frontend;
 	}
-	
+
 	public void start() {
 		this.frontend.run();
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 		IAnalyser analyser = new Analyser();
 		IFileHandler fileHandler = new FileHandler(new Decompressor());
-		
-		Product console = new Product(new Console(
-				new CodingStore(),
-				fileHandler,
-				new Compressor(),
-				new HuffmanCodingFactory(analyser, fileHandler),
-				new ConsoleDocumenter(),
-				new ConsoleBenchmarker()
-				));
-		
+
+		Product console = new Product(new Console(new CodingStore(),
+				fileHandler, new Compressor(), new HuffmanCodingFactory(
+						analyser, fileHandler), new ConsoleDocumenter(),
+				new ConsoleBenchmarker()));
+
 		console.start();
 	}
 }

@@ -12,9 +12,10 @@ import de.smba.compression.coding.huffman.HuffmanTree;
 
 
 /**
- * Factory class for different codings.
- * @author Stefan Mühlbauer
- *
+ * Factory class for Huffman codings.
+ * 
+ * @author Stefan Mühlbauer <s.muehlbauer@student.ucc.ie>
+ * 
  */
 public class HuffmanCodingFactory implements ICodingFactory {
 	

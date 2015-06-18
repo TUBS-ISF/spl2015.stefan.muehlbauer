@@ -9,11 +9,15 @@ import java.util.Map;
  */
 public class Analyser implements IAnalyser {
 
-	/** Private constructor */
 	public Analyser() {
 		super();
 	}
 
+	/**
+	 * This method analyses the word frequency for a given String text.
+	 * @param text Text
+	 * @return Map<String, Integer> frequencies
+	 */
 	public Map<String, Integer> analyseFrequency(String text) {
 		Map<String, Integer> frequency = new HashMap<String, Integer>();
 
