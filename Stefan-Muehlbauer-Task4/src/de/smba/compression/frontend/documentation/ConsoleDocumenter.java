@@ -1,11 +1,9 @@
 package de.smba.compression.frontend.documentation;
 
-//TODO compress feature
-
 public class ConsoleDocumenter implements IConsoleDocumenter {
 
 	public void documentAbout() {
-		// TODO Auto-generated method stub
+		// TODO to implement
 		
 	}
 
@@ -30,12 +28,8 @@ public class ConsoleDocumenter implements IConsoleDocumenter {
 				returnString.append("	Shows a coding.");
 				returnString.append("	Command 'show' usage: show <CodingIdentifier>");
 			} else if (command.startsWith("compress")) {
-				//#ifdef Compression
 				returnString.append("	Compresses a file.");
 				returnString.append("	Command 'compress' usage: compress <PathToFileToCompress> <PathToTargetFile>");
-				//#else
-//@				
-				//#endif
 			} else if (command.startsWith("decompress")) {
 				returnString.append("	Decompresses a file.");
 				returnString.append("	Command 'decompress' usage: decompress <PathToFileToDeompress> <PathToTargetFile>");

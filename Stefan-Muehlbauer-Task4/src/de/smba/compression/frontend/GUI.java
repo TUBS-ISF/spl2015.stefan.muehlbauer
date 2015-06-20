@@ -5,10 +5,7 @@ import java.awt.EventQueue;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
@@ -23,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -36,7 +32,6 @@ import de.smba.compression.coding.HuffmanCodingFactory;
 import de.smba.compression.coding.ICodingFactory;
 import de.smba.compression.coding.ICodingStore;
 import de.smba.compression.coding.ICompressor;
-import de.smba.compression.coding.IDecompressor;
 import de.smba.compression.file.FileHandler;
 import de.smba.compression.file.IFileHandler;
 import de.smba.compression.frontend.documentation.GUIDocumenter;
@@ -52,11 +47,15 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	
+	/*
+	 * TODO to be implemented
+	 */
 	private IGUIDocumenter guiDocumenter;
+	
 	private IFileHandler fileHandler;
 	private ICodingFactory codingFactory;
 	private ICompressor compressor;
-	private IDecompressor decompressor;
 	private Action openAction = new OpenAction();
 	private TextArea textArea;
 	private TextArea textArea_1;
@@ -64,12 +63,11 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public GUI(IGUIDocumenter guiDocumenter, ICodingFactory factory, ICompressor compressor, IDecompressor decompressor, IFileHandler fileHandler) {
+	public GUI(IGUIDocumenter guiDocumenter, ICodingFactory factory, ICompressor compressor, IFileHandler fileHandler) {
 
 		this.guiDocumenter = guiDocumenter;
 		this.codingFactory = factory;
 		this.compressor = compressor;
-		this.decompressor = decompressor;
 		this.fileHandler = fileHandler;
 
 		setTitle("CoCo Compression Console UI");
@@ -141,6 +139,9 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 	}
 
 	public class ExitAction extends AbstractAction {
+		
+		private static final long serialVersionUID = 1L;
+
 		public ExitAction() {
 			super("Exit");
 		}
@@ -154,14 +155,16 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		return openAction;
 	}
 
-	// TODO decompress
-	// An action that opens an existing COMPRESSED file
+	// TODO test
 	class OpenAction extends AbstractAction {
+		
+		private static final long serialVersionUID = 1L;
+
 		public OpenAction() {
 			super("Open", new ImageIcon("icons/open.gif"));
 		}
 
-		// TODO kram
+		//TODO test
 		public void actionPerformed(ActionEvent ev) {
 			JFileChooser chooser = new JFileChooser();
 			if (chooser.showOpenDialog(GUI.this) != JFileChooser.APPROVE_OPTION)
@@ -181,7 +184,6 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 					GUI frame = new GUI(new GUIDocumenter(), 
 							new HuffmanCodingFactory(new Analyser(), new FileHandler(new Decompressor())),
 							new Compressor(),
-							new Decompressor(),
 							new FileHandler(new Decompressor()));
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -208,10 +210,22 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 			if (file == null)
 				return;
 
-			String toStore = textArea_1.getText();
+			
+			String toCompress = textArea.getText();
+			
+			final ICodingFactory cFac = GUI.this.codingFactory;
+			Map<String, String> coding = cFac.buildCodingFromText(toCompress);
+			ICodingStore store = new CodingStore();
+			store.addCoding("current", coding);
+			Map<String, String> anticoding = store.getAnticoding("current");
+			
+			
+			String compressed = GUI.this.compressor.compress(coding, toCompress);
+			
+			
 			
 			try {
-				GUI.this.fileHandler.storeFile(file.getAbsolutePath(), toStore);
+				GUI.this.fileHandler.storeCompressedFile(file.getAbsolutePath(), compressed, anticoding);
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -228,11 +242,7 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 			
 			final ICodingFactory cFac = GUI.this.codingFactory;
 			Map<String, String> coding = cFac.buildCodingFromText(toCompress);
-			ICodingStore store = new CodingStore();
-			store.addCoding("current", coding);
-			Map<String, String> anticoding = store.getAnticoding("current");
-			
-			
+						
 			String compressed = GUI.this.compressor.compress(coding, toCompress);
 			
 			textArea_1.setText(compressed);

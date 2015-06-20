@@ -1,18 +1,12 @@
 package de.smba.compression;
 
 import de.smba.compression.analysis.Analyser;
-import de.smba.compression.analysis.IAnalyser;
-import de.smba.compression.coding.CodingStore;
 import de.smba.compression.coding.Compressor;
 import de.smba.compression.coding.Decompressor;
 import de.smba.compression.coding.HuffmanCodingFactory;
 import de.smba.compression.file.FileHandler;
-import de.smba.compression.file.IFileHandler;
-import de.smba.compression.frontend.Console;
 import de.smba.compression.frontend.GUI;
 import de.smba.compression.frontend.IFrontend;
-import de.smba.compression.frontend.benchmarking.ConsoleBenchmarker;
-import de.smba.compression.frontend.documentation.ConsoleDocumenter;
 import de.smba.compression.frontend.documentation.GUIDocumenter;
 
 /**
@@ -52,20 +46,22 @@ public class Product {
 
 	public static void main(String[] args) {
 
+		/*
 		IAnalyser analyser = new Analyser();
 		IFileHandler fileHandler = new FileHandler(new Decompressor());
 
+		
 		Product console = new Product(new Console(new CodingStore(),
+		 
 				fileHandler, new Compressor(), new HuffmanCodingFactory(
 						analyser, fileHandler), new ConsoleDocumenter(),
 				new ConsoleBenchmarker()));
 
-		//console.start();
-		
+		console.start();
+		*/
 		Product gui = new Product(new GUI(new GUIDocumenter(), 
 				new HuffmanCodingFactory(new Analyser(), new FileHandler(new Decompressor())),
 				new Compressor(),
-				new Decompressor(),
 				new FileHandler(new Decompressor())));
 		
 		gui.start();
