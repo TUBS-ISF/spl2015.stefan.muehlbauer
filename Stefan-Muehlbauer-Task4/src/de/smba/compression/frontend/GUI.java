@@ -4,10 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -25,26 +28,49 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import de.smba.compression.analysis.Analyser;
+import de.smba.compression.coding.CodingStore;
+import de.smba.compression.coding.Compressor;
+import de.smba.compression.coding.Decompressor;
+import de.smba.compression.coding.HuffmanCodingFactory;
+import de.smba.compression.coding.ICodingFactory;
+import de.smba.compression.coding.ICodingStore;
+import de.smba.compression.coding.ICompressor;
+import de.smba.compression.coding.IDecompressor;
+import de.smba.compression.file.FileHandler;
+import de.smba.compression.file.IFileHandler;
 import de.smba.compression.frontend.documentation.GUIDocumenter;
 import de.smba.compression.frontend.documentation.IGUIDocumenter;
 
-public class GUI extends JFrame implements IFrontend {
+/**
+ * This class defines the GUI frontend variant of the compression tool.
+ * 
+ * @author Stefan Mühlbauer <s.muehlbauer@student.ucc.ie>
+ *
+ */
+public class GUI extends JFrame implements IFrontend, ActionListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private IGUIDocumenter guiDocumenter;
+	private IFileHandler fileHandler;
+	private ICodingFactory codingFactory;
+	private ICompressor compressor;
+	private IDecompressor decompressor;
 	private Action openAction = new OpenAction();
 	private TextArea textArea;
 	private TextArea textArea_1;
+
 	/**
 	 * Create the frame.
 	 */
-	public GUI(IGUIDocumenter guiDocumenter) {
+	public GUI(IGUIDocumenter guiDocumenter, ICodingFactory factory, ICompressor compressor, IDecompressor decompressor, IFileHandler fileHandler) {
 
 		this.guiDocumenter = guiDocumenter;
+		this.codingFactory = factory;
+		this.compressor = compressor;
+		this.decompressor = decompressor;
+		this.fileHandler = fileHandler;
 
 		setTitle("CoCo Compression Console UI");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,8 +85,8 @@ public class GUI extends JFrame implements IFrontend {
 		menuBar.add(mnFile);
 
 		mnFile.add(getOpenAction());
-		//JMenuItem mntmOpenopen = new JMenuItem("Open uncompressed file...");
-		//mnFile.add(mntmOpenopen);
+		// JMenuItem mntmOpenopen = new JMenuItem("Open uncompressed file...");
+		// mnFile.add(mntmOpenopen);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Save compressed file");
 		mnFile.add(mntmNewMenuItem);
@@ -92,6 +118,10 @@ public class GUI extends JFrame implements IFrontend {
 		leftPanel.add(textArea, BorderLayout.CENTER);
 
 		JButton btnCompre = new JButton("Compress");
+
+		btnCompre.setActionCommand("compress");
+		btnCompre.addActionListener(this);
+
 		leftPanel.add(btnCompre, BorderLayout.SOUTH);
 
 		JPanel rightPanel = new JPanel();
@@ -119,10 +149,13 @@ public class GUI extends JFrame implements IFrontend {
 			System.exit(0);
 		}
 	}
-	
-	protected Action getOpenAction() { return openAction; }
 
-	// An action that opens an existing file
+	protected Action getOpenAction() {
+		return openAction;
+	}
+
+	// TODO decompress
+	// An action that opens an existing COMPRESSED file
 	class OpenAction extends AbstractAction {
 		public OpenAction() {
 			super("Open", new ImageIcon("icons/open.gif"));
@@ -136,28 +169,8 @@ public class GUI extends JFrame implements IFrontend {
 			File file = chooser.getSelectedFile();
 			if (file == null)
 				return;
-
-			FileReader reader = null;
-			try {
-				reader = new FileReader(file);
-				BufferedReader br = new BufferedReader(reader);
-				String bener;
-				StringBuffer s = new StringBuffer(); 
-				while((bener = br.readLine()) != null) { 
-					s.append(bener);
-				} 
-				GUI.this.textArea.setText(s.toString() + "\n");//read(reader, null);
-			} catch (IOException ex) {
-				JOptionPane.showMessageDialog(GUI.this,
-						"File Not Found", "ERROR", JOptionPane.ERROR_MESSAGE);
-			} finally {
-				if (reader != null) {
-					try {
-						reader.close();
-					} catch (IOException x) {
-					}
-				}
-			}
+			String decompressed = fileHandler.loadCompressedFile(file.getAbsolutePath());
+			textArea.setText(decompressed);
 		}
 	}
 
@@ -165,12 +178,67 @@ public class GUI extends JFrame implements IFrontend {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI frame = new GUI(new GUIDocumenter());
+					GUI frame = new GUI(new GUIDocumenter(), 
+							new HuffmanCodingFactory(new Analyser(), new FileHandler(new Decompressor())),
+							new Compressor(),
+							new Decompressor(),
+							new FileHandler(new Decompressor()));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+
+	// TODO compress & save
+	class SaveAction extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+
+		public SaveAction() {
+			super("Save", new ImageIcon("icons/save.gif"));
+		}
+
+		public void actionPerformed(ActionEvent ev) {
+			JFileChooser chooser = new JFileChooser();
+			if (chooser.showSaveDialog(GUI.this) != JFileChooser.APPROVE_OPTION)
+				return;
+			File file = chooser.getSelectedFile();
+			if (file == null)
+				return;
+
+			String toStore = textArea_1.getText();
+			
+			try {
+				GUI.this.fileHandler.storeFile(file.getAbsolutePath(), toStore);
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+
+	//TODO test
+	public void actionPerformed(ActionEvent e) {
+		if ("compress".equals(e.getActionCommand())) {
+
+			String toCompress = textArea.getText();
+			
+			final ICodingFactory cFac = GUI.this.codingFactory;
+			Map<String, String> coding = cFac.buildCodingFromText(toCompress);
+			ICodingStore store = new CodingStore();
+			store.addCoding("current", coding);
+			Map<String, String> anticoding = store.getAnticoding("current");
+			
+			
+			String compressed = GUI.this.compressor.compress(coding, toCompress);
+			
+			textArea_1.setText(compressed);
+			
+			//TODO ratio berechnen, ausgeben
+
+		}
 	}
 }

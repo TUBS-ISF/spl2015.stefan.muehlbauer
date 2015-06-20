@@ -12,7 +12,6 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.util.Base64;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -22,6 +21,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.commons.codec.binary.Base64;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -110,7 +110,7 @@ public class FileHandler implements IFileHandler {
 	/** Read the object from Base64 string. */
 	private static Object deserialise(String s) throws IOException,
 			ClassNotFoundException {
-		byte[] data = Base64.getDecoder().decode(s);
+		byte[] data = Base64.decodeBase64(s);
 		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
 				data));
 		Object o = ois.readObject();
@@ -124,7 +124,7 @@ public class FileHandler implements IFileHandler {
 		ObjectOutputStream oos = new ObjectOutputStream(baos);
 		oos.writeObject(o);
 		oos.close();
-		return Base64.getEncoder().encodeToString(baos.toByteArray());
+		return Base64.encodeBase64String(baos.toByteArray());
 
 	}
 

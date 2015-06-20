@@ -6,7 +6,6 @@ import java.util.Map;
 
 import de.smba.compression.analysis.IAnalyser;
 import de.smba.compression.file.IFileHandler;
-
 import de.smba.compression.coding.huffman.HuffmanCode;
 import de.smba.compression.coding.huffman.HuffmanTree;
 
@@ -39,6 +38,13 @@ public class HuffmanCodingFactory implements ICodingFactory {
 			e.printStackTrace();
 		}
 
+		Map<String, Integer> frequency = this.analyser.analyseFrequency(text);
+		HuffmanTree tree = HuffmanCode.buildTree(frequency);
+		return HuffmanCode.exportCoding(tree, new StringBuffer(),
+				new HashMap<String, String>());
+	}
+	
+	public Map<String, String> buildCodingFromText(String text) {
 		Map<String, Integer> frequency = this.analyser.analyseFrequency(text);
 		HuffmanTree tree = HuffmanCode.buildTree(frequency);
 		return HuffmanCode.exportCoding(tree, new StringBuffer(),

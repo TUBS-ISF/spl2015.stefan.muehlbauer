@@ -62,7 +62,11 @@ public class Product {
 
 		//console.start();
 		
-		Product gui = new Product(new GUI(new GUIDocumenter()));
+		Product gui = new Product(new GUI(new GUIDocumenter(), 
+				new HuffmanCodingFactory(new Analyser(), new FileHandler(new Decompressor())),
+				new Compressor(),
+				new Decompressor(),
+				new FileHandler(new Decompressor())));
 		
 		gui.start();
 	}

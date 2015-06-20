@@ -15,4 +15,6 @@ public interface ICodingFactory {
 	 * @return coding
 	 */
 	public Map<String, String> buildCoding(String path);
+	
+	public Map<String, String> buildCodingFromText(String text);
 }
