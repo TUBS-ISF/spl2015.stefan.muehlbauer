@@ -11,7 +11,6 @@ public class EmptyDocumenter implements IDocumenter, IGUIDocumenter, IConsoleDoc
 	}
 
 	public String documentHelp(String command) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -3,7 +3,8 @@ package de.smba.compression.frontend.documentation;
 public class ConsoleDocumenter implements IConsoleDocumenter {
 
 	public void documentAbout() {
-		// TODO to implement
+		
+		System.out.println("	This is a console based frontend.");
 		
 	}
 
