@@ -34,6 +34,11 @@ import de.smba.compression.coding.ICodingStore;
 import de.smba.compression.coding.ICompressor;
 import de.smba.compression.file.FileHandler;
 import de.smba.compression.file.IFileHandler;
+import de.smba.compression.frontend.benchmarking.AbstractGUIBenchmarker;
+import de.smba.compression.frontend.benchmarking.EmptyGUIBenchmarker;
+import de.smba.compression.frontend.benchmarking.GUIBenchmarker;
+import de.smba.compression.frontend.benchmarking.IBenchmarker;
+import de.smba.compression.frontend.documentation.EmptyDocumenter;
 import de.smba.compression.frontend.documentation.GUIDocumenter;
 import de.smba.compression.frontend.documentation.IGUIDocumenter;
 
@@ -52,6 +57,7 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 	 * TODO to be implemented
 	 */
 	private IGUIDocumenter guiDocumenter;
+	private AbstractGUIBenchmarker guiBenchmarker;
 	
 	private IFileHandler fileHandler;
 	private ICodingFactory codingFactory;
@@ -64,9 +70,11 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public GUI(IGUIDocumenter guiDocumenter, ICodingFactory factory, ICompressor compressor, IFileHandler fileHandler) {
+	public GUI(IGUIDocumenter guiDocumenter, ICodingFactory factory, ICompressor compressor, IFileHandler fileHandler, AbstractGUIBenchmarker guiBenchmarker) {
 
 		this.guiDocumenter = guiDocumenter;
+		this.guiBenchmarker = (AbstractGUIBenchmarker) guiBenchmarker;
+		
 		this.codingFactory = factory;
 		this.compressor = compressor;
 		this.fileHandler = fileHandler;
@@ -93,10 +101,9 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		mnFile.add(new ExitAction());
 
 		JMenu mnAbout = new JMenu("About");
+		mnAbout.add(new AboutAction());
 		menuBar.add(mnAbout);
 
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mnAbout.add(mntmAbout);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -182,26 +189,30 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 				return;
 			String decompressed = fileHandler.loadCompressedFile(file.getAbsolutePath());
 			textArea.setText(decompressed);
+			textArea_1.setText("");
 		}
 	}
 
 	public void run() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUI frame = new GUI(new GUIDocumenter(), 
-							new HuffmanCodingFactory(new Analyser(), new FileHandler(new Decompressor())),
-							new Compressor(),
-							new FileHandler(new Decompressor()));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		
+		this.setVisible(true);
 	}
 
-	// TODO compress & save
+	class AboutAction extends AbstractAction {
+
+		public AboutAction() {
+			super("About");
+		}
+		
+		
+		public void actionPerformed(ActionEvent arg0) {
+			System.out.println(666);
+			GUI.this.guiDocumenter.documentAbout();
+		}
+		
+	}
+	
+
 	class SaveAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
@@ -258,7 +269,7 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 			
 			textArea_1.setText(compressed);
 			
-			//TODO ratio berechnen, ausgeben
+			this.guiBenchmarker.compressBenchmarkNotification(toCompress, compressed);
 
 		}
 	}

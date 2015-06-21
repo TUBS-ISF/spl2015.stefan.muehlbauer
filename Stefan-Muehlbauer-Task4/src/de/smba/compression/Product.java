@@ -1,13 +1,23 @@
 package de.smba.compression;
 
 import de.smba.compression.analysis.Analyser;
+import de.smba.compression.analysis.IAnalyser;
+import de.smba.compression.coding.CodingStore;
 import de.smba.compression.coding.Compressor;
 import de.smba.compression.coding.Decompressor;
 import de.smba.compression.coding.HuffmanCodingFactory;
 import de.smba.compression.file.FileHandler;
+import de.smba.compression.file.IFileHandler;
+import de.smba.compression.frontend.Console;
 import de.smba.compression.frontend.GUI;
 import de.smba.compression.frontend.IFrontend;
+import de.smba.compression.frontend.benchmarking.ConsoleBenchmarker;
+import de.smba.compression.frontend.benchmarking.EmptyGUIBenchmarker;
+import de.smba.compression.frontend.benchmarking.GUIBenchmarker;
+import de.smba.compression.frontend.documentation.ConsoleDocumenter;
+import de.smba.compression.frontend.documentation.EmptyDocumenter;
 import de.smba.compression.frontend.documentation.GUIDocumenter;
+import de.smba.compression.frontend.documentation.IGUIDocumenter;
 
 /**
  * This product connects the different components via glue code in order to
@@ -46,24 +56,29 @@ public class Product {
 
 	public static void main(String[] args) {
 
-		/*
+		
 		IAnalyser analyser = new Analyser();
 		IFileHandler fileHandler = new FileHandler(new Decompressor());
 
 		
-		Product console = new Product(new Console(new CodingStore(),
+		IFrontend console = new Console(new CodingStore(),
 		 
 				fileHandler, new Compressor(), new HuffmanCodingFactory(
 						analyser, fileHandler), new ConsoleDocumenter(),
-				new ConsoleBenchmarker()));
+				new ConsoleBenchmarker());
 
-		console.start();
-		*/
-		Product gui = new Product(new GUI(new GUIDocumenter(), 
+		console.run();
+		
+		
+		/*
+		GUI gui = new GUI(new EmptyDocumenter(), 
 				new HuffmanCodingFactory(new Analyser(), new FileHandler(new Decompressor())),
 				new Compressor(),
-				new FileHandler(new Decompressor())));
-		
-		gui.start();
+				new FileHandler(new Decompressor()),
+				new EmptyGUIBenchmarker());
+		gui.run();
+		*/
 	}
 }
+
+//01

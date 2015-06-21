@@ -7,4 +7,11 @@ public class EmptyGUIBenchmarker extends AbstractGUIBenchmarker {
 		return 0;
 	}
 
+	@Override
+	public void compressBenchmarkNotification(String old, String news) {
+		
+		//foo
+		
+	}
+
 }
