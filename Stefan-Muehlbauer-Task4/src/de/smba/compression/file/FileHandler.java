@@ -28,6 +28,15 @@ import org.w3c.dom.NodeList;
 
 import de.smba.compression.coding.IDecompressor;
 
+/**
+ * @see Apache Commons Codec library 1.1 is ,the latest version 
+ * being compatible with Java 5. Since the library does not ship with
+ * String encoding or decoding functionality we refer to a workaround
+ * using the methods encodeBase64() and decodeBase64().
+ * 
+ * @author Stefan Mühlbauer <s.muehlbauer@student.ucc.ue>
+ *
+ */
 public class FileHandler implements IFileHandler {
 	
 	private IDecompressor decompressor;
@@ -110,7 +119,7 @@ public class FileHandler implements IFileHandler {
 	/** Read the object from Base64 string. */
 	private static Object deserialise(String s) throws IOException,
 			ClassNotFoundException {
-		byte[] data = Base64.decodeBase64(s);
+		byte[] data = decodeBase64String(s).getBytes();
 		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(
 				data));
 		Object o = ois.readObject();
@@ -124,8 +133,16 @@ public class FileHandler implements IFileHandler {
 		ObjectOutputStream oos = new ObjectOutputStream(baos);
 		oos.writeObject(o);
 		oos.close();
-		return Base64.encodeBase64String(baos.toByteArray());
+		return encodeBase64String(baos.toString());
 
+	}
+	
+	public static String encodeBase64String(String s) {
+		return new String(Base64.encodeBase64(s.getBytes()));
+	}
+	
+	public static String decodeBase64String(String s) {
+		return new String(Base64.decodeBase64(s.getBytes()));
 	}
 
 	public String getCompressed(String path) {
