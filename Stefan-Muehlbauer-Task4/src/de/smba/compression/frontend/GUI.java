@@ -1,7 +1,6 @@
 package de.smba.compression.frontend;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,27 +18,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import de.smba.compression.analysis.Analyser;
 import de.smba.compression.coding.CodingStore;
-import de.smba.compression.coding.Compressor;
-import de.smba.compression.coding.Decompressor;
-import de.smba.compression.coding.HuffmanCodingFactory;
 import de.smba.compression.coding.ICodingFactory;
 import de.smba.compression.coding.ICodingStore;
 import de.smba.compression.coding.ICompressor;
-import de.smba.compression.file.FileHandler;
 import de.smba.compression.file.IFileHandler;
 import de.smba.compression.frontend.benchmarking.AbstractGUIBenchmarker;
-import de.smba.compression.frontend.benchmarking.EmptyGUIBenchmarker;
-import de.smba.compression.frontend.benchmarking.GUIBenchmarker;
-import de.smba.compression.frontend.benchmarking.IBenchmarker;
-import de.smba.compression.frontend.documentation.EmptyDocumenter;
-import de.smba.compression.frontend.documentation.GUIDocumenter;
 import de.smba.compression.frontend.documentation.IGUIDocumenter;
 
 /**
@@ -53,9 +41,6 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	/*
-	 * TODO to be implemented
-	 */
 	private IGUIDocumenter guiDocumenter;
 	private AbstractGUIBenchmarker guiBenchmarker;
 	
@@ -167,7 +152,6 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		return saveAction;
 	}
 	
-	// TODO test
 	class OpenAction extends AbstractAction {
 		
 		private static final long serialVersionUID = 1L;
@@ -176,11 +160,8 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 			super("Open compressed ...", new ImageIcon("icons/open.gif"));
 		}
 
-		//TODO test
 		public void actionPerformed(ActionEvent ev) {
-			
-			System.out.println("LOG: Open selected");
-			
+
 			JFileChooser chooser = new JFileChooser();
 			if (chooser.showOpenDialog(GUI.this) != JFileChooser.APPROVE_OPTION)
 				return;
@@ -200,13 +181,14 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 
 	class AboutAction extends AbstractAction {
 
+		private static final long serialVersionUID = 1L;
+
 		public AboutAction() {
 			super("About");
 		}
 		
 		
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println(666);
 			GUI.this.guiDocumenter.documentAbout();
 		}
 		
@@ -222,9 +204,7 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		}
 
 		public void actionPerformed(ActionEvent ev) {
-			
-			System.out.println("LOG: Save selected");
-			
+					
 			JFileChooser chooser = new JFileChooser();
 			if (chooser.showSaveDialog(GUI.this) != JFileChooser.APPROVE_OPTION)
 				return;
@@ -256,7 +236,6 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		}
 	}
 
-	//TODO test
 	public void actionPerformed(ActionEvent e) {
 		if ("compress".equals(e.getActionCommand())) {
 
