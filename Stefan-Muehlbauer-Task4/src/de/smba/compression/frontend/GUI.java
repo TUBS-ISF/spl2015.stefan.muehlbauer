@@ -57,6 +57,7 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 	private ICodingFactory codingFactory;
 	private ICompressor compressor;
 	private Action openAction = new OpenAction();
+	private Action saveAction = new SaveAction();
 	private TextArea textArea;
 	private TextArea textArea_1;
 
@@ -86,8 +87,8 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		// JMenuItem mntmOpenopen = new JMenuItem("Open uncompressed file...");
 		// mnFile.add(mntmOpenopen);
 
-		JMenuItem mntmNewMenuItem = new JMenuItem("Save compressed file");
-		mnFile.add(mntmNewMenuItem);
+		//JMenuItem mntmNewMenuItem = new JMenuItem("Save compressed file");
+		mnFile.add(getSaveAction());
 
 		mnFile.add(new ExitAction());
 
@@ -155,17 +156,24 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		return openAction;
 	}
 
+	protected Action getSaveAction() {
+		return saveAction;
+	}
+	
 	// TODO test
 	class OpenAction extends AbstractAction {
 		
 		private static final long serialVersionUID = 1L;
 
 		public OpenAction() {
-			super("Open", new ImageIcon("icons/open.gif"));
+			super("Open compressed ...", new ImageIcon("icons/open.gif"));
 		}
 
 		//TODO test
 		public void actionPerformed(ActionEvent ev) {
+			
+			System.out.println("LOG: Open selected");
+			
 			JFileChooser chooser = new JFileChooser();
 			if (chooser.showOpenDialog(GUI.this) != JFileChooser.APPROVE_OPTION)
 				return;
@@ -199,10 +207,13 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		private static final long serialVersionUID = 1L;
 
 		public SaveAction() {
-			super("Save", new ImageIcon("icons/save.gif"));
+			super("Save compressed...", new ImageIcon("icons/save.gif"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
+			
+			System.out.println("LOG: Save selected");
+			
 			JFileChooser chooser = new JFileChooser();
 			if (chooser.showSaveDialog(GUI.this) != JFileChooser.APPROVE_OPTION)
 				return;
