@@ -77,12 +77,7 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		menuBar.add(mnFile);
 
 		mnFile.add(getOpenAction());
-		// JMenuItem mntmOpenopen = new JMenuItem("Open uncompressed file...");
-		// mnFile.add(mntmOpenopen);
-
-		//JMenuItem mntmNewMenuItem = new JMenuItem("Save compressed file");
 		mnFile.add(getSaveAction());
-
 		mnFile.add(new ExitAction());
 
 		JMenu mnAbout = new JMenu("About");

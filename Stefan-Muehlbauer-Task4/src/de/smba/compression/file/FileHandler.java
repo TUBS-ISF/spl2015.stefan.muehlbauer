@@ -81,7 +81,7 @@ public class FileHandler implements IFileHandler {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
+
 	public String loadCompressedFile(String path) {
 		try {
 
@@ -91,6 +91,7 @@ public class FileHandler implements IFileHandler {
 			Object deserialised = deserialise(anticodingSerialised);
 			Map<String, String> anticodingDeserialised = null;
 			if (deserialised instanceof Map<?, ?>) {
+				//unchecked
 				anticodingDeserialised = (Map<String, String>) deserialised;
 			} else {
 				throw new IOException();
