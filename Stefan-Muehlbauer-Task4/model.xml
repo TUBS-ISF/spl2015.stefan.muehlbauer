@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="0">
+		<struct>
+			<and coordinates="579, 40" mandatory="true" name="FileCompressionTool">
+				<and coordinates="216, 90" mandatory="true" name="LIbrary">
+					<description>
+						This feature adds the library for the application to the software product.
+					</description>
+					<or coordinates="23, 140" mandatory="true" name="Encoding">
+						<description>
+							This feature adds several different entropy encondings to the library.
+						</description>
+						<feature coordinates="-57, 190" mandatory="true" name="Huffman">
+							<description>
+								This feature adds an implementation of the Huffman encoding to the library component.
+							</description>
+						</feature>
+						<feature abstract="true" coordinates="6, 190" mandatory="true" name="ShannonFano">
+							<description>
+								This feature adds an implementation of the Shannon-Fano encoding to the library component.
+							</description>
+						</feature>
+						<feature abstract="true" coordinates="98, 190" mandatory="true" name="Arithmetic">
+							<description>
+								This feature adds an implementation of the Arithmetic encoding to the library component.
+							</description>
+						</feature>
+					</or>
+					<feature coordinates="120, 140" mandatory="true" name="Analysis">
+						<description>
+							This feature adds the obligatory word frequency analysis to the library.
+						</description>
+					</feature>
+					<and coordinates="212, 140" name="Console">
+						<description>
+							This feature adds optional comand line acces to the library.
+						</description>
+						<feature coordinates="170, 190" name="ConsoleDocumentation"/>
+					</and>
+					<feature coordinates="273, 140" name="Compression">
+						<description>
+							This feature encapsulates the compression functionality.
+						</description>
+					</feature>
+					<feature coordinates="361, 140" name="Decompression">
+						<description>
+							This feature encapsulates the decompression functionality
+						</description>
+					</feature>
+				</and>
+				<and abstract="true" coordinates="697, 90" name="GUI">
+					<description>
+						This feature adds the GUI functionality to the software product.
+					</description>
+					<feature coordinates="463, 140" mandatory="true" name="Basic">
+						<description>
+							This feature adds a minimal, but extensible GUI to the software product.
+						</description>
+					</feature>
+					<feature coordinates="509, 140" mandatory="true" name="Persistent">
+						<description>
+							This feature adds writing/opening/saving functionality to the software product.
+						</description>
+					</feature>
+					<and abstract="true" coordinates="580, 140" name="Logging">
+						<description>
+							This feature adds logging functionality to the GUI.
+						</description>
+						<feature abstract="true" coordinates="589, 190" name="Filter">
+							<description>
+								This feature adds an additional filter function to the logging module.
+							</description>
+						</feature>
+					</and>
+					<feature abstract="true" coordinates="641, 140" name="Update">
+						<description>
+							In order to stay tuned, this feature adds an update checker to the softwarep product.
+						</description>
+					</feature>
+					<feature abstract="true" coordinates="692, 137" name="Combination">
+						<description>
+							This feature adds combination options for different encodings.
+						</description>
+					</feature>
+					<feature abstract="true" coordinates="784, 140" name="Comparison">
+						<description>
+							This feature adds a synoptic view to the GUI to compare different texts.
+						</description>
+					</feature>
+					<feature coordinates="866, 140" name="Documentation">
+						<description>
+							This feature adds a brief documentation about the different encodings to the software product.
+						</description>
+					</feature>
+				</and>
+				<and coordinates="974, 90" name="Benchmarking">
+					<description>
+						This feature adds a component in order to evaluate different encodings.
+					</description>
+					<and coordinates="994, 136" name="Report">
+						<description>
+							This feature adds a report functionality to the benchmarking component.
+						</description>
+						<feature abstract="true" coordinates="993, 188" name="TestSet">
+							<description>
+								This feature adds tests/test sets to the benchmarking component.
+							</description>
+						</feature>
+					</and>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
