@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="/home/stefan/git/spl2015.stefan.muehlbauer/Stefan-Muehlbauer-Task4/lib/commons-codec-1.10-sources.jar"/>
 	<classpathentry kind="lib" path="/home/stefan/git/spl2015.stefan.muehlbauer/Stefan-Muehlbauer-Task4/lib/commons-codec-1.10-tests.jar"/>
 	<classpathentry kind="lib" path="/home/stefan/git/spl2015.stefan.muehlbauer/Stefan-Muehlbauer-Task4/lib/commons-codec-1.10-test-sources.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

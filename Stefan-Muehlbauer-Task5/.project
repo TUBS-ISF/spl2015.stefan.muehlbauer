@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>Stefan-Muehlbauer-Task3</name>
+	<name>Stefan-Muehlbauer-Task5</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,7 +14,7 @@
 				</dictionary>
 				<dictionary>
 					<key>composer</key>
-					<value>de.ovgu.featureide.preprocessor.antenna</value>
+					<value>de.ovgu.featureide.composer.featurehouse</value>
 				</dictionary>
 				<dictionary>
 					<key>equations</key>
@@ -22,7 +22,7 @@
 				</dictionary>
 				<dictionary>
 					<key>source</key>
-					<value>src</value>
+					<value>features</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>
