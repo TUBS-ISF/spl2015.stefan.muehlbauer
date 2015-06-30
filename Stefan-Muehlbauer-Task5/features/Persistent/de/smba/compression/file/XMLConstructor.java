@@ -6,7 +6,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class XMLConstructor {
+public class XMLConstructor  {
 
 	public static Document constructFile(String compressed, String anticoding) {
 
