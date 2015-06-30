@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-	<featureModel chosenLayoutAlgorithm="1">
+	<featureModel chosenLayoutAlgorithm="0">
 		<struct>
-			<and abstract="true" mandatory="true" name="StefanMuehlbauerTask5">
-				<feature name="Base"/>
+			<and coordinates="636, 41" mandatory="true" name="FileCompressionTool">
+				<alt coordinates="579, 90" mandatory="true" name="Frontend">
+					<and coordinates="315, 189" mandatory="true" name="GUI">
+						<feature coordinates="-28, 276" name="GUIDocumentation"/>
+						<feature coordinates="94, 276" mandatory="true" name="Basic"/>
+						<feature coordinates="141, 276" mandatory="true" name="Persistent"/>
+						<and abstract="true" coordinates="214, 276" name="Logging">
+							<feature abstract="true" coordinates="214, 326" name="Filter"/>
+						</and>
+						<feature abstract="true" coordinates="275, 276" name="Update"/>
+						<feature abstract="true" coordinates="332, 276" name="Combination"/>
+						<feature abstract="true" coordinates="420, 276" name="Comparison"/>
+					</and>
+					<and coordinates="533, 215" mandatory="true" name="Console">
+						<feature coordinates="530, 354" name="ConsoleDocumentation"/>
+					</and>
+				</alt>
+				<and coordinates="645, 90" mandatory="true" name="Library">
+					<feature coordinates="626, 282" mandatory="true" name="Analysis"/>
+					<feature coordinates="689, 282" mandatory="true" name="Decompression"/>
+					<feature coordinates="793, 282" name="Compression"/>
+					<alt coordinates="884, 282" mandatory="true" name="Encoding">
+						<feature coordinates="884, 332" mandatory="true" name="Huffman"/>
+						<feature coordinates="949, 332" mandatory="true" name="ShannonFano"/>
+						<feature abstract="true" coordinates="1041, 332" mandatory="true" name="Arithmetic"/>
+					</alt>
+				</and>
+				<and coordinates="702, 90" name="Benchmarking">
+					<and coordinates="802, 133" mandatory="true" name="Report">
+						<feature abstract="true" coordinates="905, 173" name="TestSet"/>
+					</and>
+				</and>
 			</and>
 		</struct>
 		<constraints/>
