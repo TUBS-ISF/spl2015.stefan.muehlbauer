@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-class Analyser {
+public class Analyser {
 
 	/**
 	 * This method analyses the word frequency for a given String text.

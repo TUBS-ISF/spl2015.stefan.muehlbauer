@@ -1,16 +1,23 @@
 package de.smba.compression.frontend;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import de.smba.compression.coding.CodingFactoryMediator;
+import de.smba.compression.coding.CodingStore;
+import de.smba.compression.coding.Compressor;
+import de.smba.compression.coding.Decompressor;
 import de.smba.compression.coding.ICodingFactory;
 import de.smba.compression.coding.ICodingStore;
 import de.smba.compression.coding.ICompressor;
+import de.smba.compression.file.FileHandler;
 import de.smba.compression.file.IFileHandler;
 import de.smba.compression.frontend.benchmarking.AbstractConsoleBenchmarker;
+import de.smba.compression.frontend.benchmarking.ConsoleBenchmarker;
+import de.smba.compression.frontend.documentation.ConsoleDocumenter;
 import de.smba.compression.frontend.documentation.IConsoleDocumenter;
 
 /**
@@ -19,33 +26,52 @@ import de.smba.compression.frontend.documentation.IConsoleDocumenter;
  * @author Stefan Mühlbauer <s.muehlbauer@student.ucc.ie>
  *
  */
-public class Console implements IFrontend {
+public  class  Console  implements IFrontend {
+	
 
 	private IFileHandler fileHandler;
+
+	
 	private ICompressor compressor;
+
+	
 	private ICodingStore store;
+
+	
 	private IConsoleDocumenter consoleDocumenter;
+
+	
 	private AbstractConsoleBenchmarker benchmarker;
 
-	private Collection<ICodingFactory> codingFactories;
+	
+
+	private List<ICodingFactory> codingFactories;
+
+	
 	private ICodingFactory currentCodingFactory;
+
+	
 
 	private Scanner in;
 
-	public Console(ICodingStore store, IFileHandler fileHandler,
-			ICompressor compressor, ICodingFactory initialCodingFactory,
-			IConsoleDocumenter consoleDocumenter,
-			AbstractConsoleBenchmarker consoleBenchmarker) {
-		this.in = new Scanner(System.in);
-		this.store = store;
-		this.fileHandler = fileHandler;
-		this.compressor = compressor;
-		this.consoleDocumenter = consoleDocumenter;
-		this.benchmarker = consoleBenchmarker;
+	
 
-		this.codingFactories = new HashSet<ICodingFactory>();
-		this.codingFactories.add(initialCodingFactory);
-		this.currentCodingFactory = initialCodingFactory;
+	public Console() {
+		
+		this.in = new Scanner(System.in);
+		this.store = new CodingStore();
+		this.fileHandler = new FileHandler(new Decompressor());
+		this.compressor = new Compressor();
+		this.consoleDocumenter = new ConsoleDocumenter();
+		this.benchmarker = new ConsoleBenchmarker();
+
+		this.codingFactories = new LinkedList<ICodingFactory>();
+		this.codingFactories.add(getInitialCodingFactory());
+		this.currentCodingFactory = this.codingFactories.get(0);
+	}
+	
+	protected static ICodingFactory getInitialCodingFactory() {
+		return CodingFactoryMediator.getCodingFactory();
 	}
 
 	public void delegateLoadCoding(String command) {
@@ -64,6 +90,8 @@ public class Console implements IFrontend {
 		}
 	}
 
+	
+
 	public void delegateShow(String command) {
 		if (command.length() != 0) {
 			if (this.store.contains(command)) {
@@ -76,6 +104,8 @@ public class Console implements IFrontend {
 			System.out.println("	No coding specified!");
 		}
 	}
+
+	
 
 	public void delegateCompress(String command) {
 
@@ -131,6 +161,8 @@ public class Console implements IFrontend {
 		}
 	}
 
+	
+
 	public void delegateDecompress(String command) {
 		if (command.length() != 0) {
 
@@ -153,6 +185,8 @@ public class Console implements IFrontend {
 			System.out.println("	No path specified!");
 		}
 	}
+
+	
 
 	public void run() {
 
