@@ -11,7 +11,7 @@ import de.smba.compression.coding.ICompressor;
  * @author Stefan Mühlbauer <s.muehlbauer@student.ucc.ie>
  *
  */
-public class EmptyCompressor implements ICompressor {
+public class Compressor implements ICompressor {
 
 	public String compress(Map<String, String> coding, String toEncode) {
 		return null;
