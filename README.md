@@ -6,8 +6,13 @@ We are using
 * the Apache Commons Codecs Library (http://commons.apache.org/proper/commons-codec/download_codec.cgi), version 1.10, available under the Apache License Version 2.0.
 
 Task 1: Domain description
+
 Task 2: Variability implemented via command arguments
+
 Task 3: Variability implemented via the Antenna Preprocessor for Java
+
 Task 4: Variability implemented using Framework concepts/Inversion of Control
+
 Task 5: Variability implemented using Feature-Oriented Programming (FOP)
+
 Task 6: TBD
