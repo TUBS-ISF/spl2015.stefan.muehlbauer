@@ -9,6 +9,6 @@ import de.smba.compression.analysis.IAnalyser;
 
 public class CodingFactoryMediator {
 	public static ICodingFactory getCodingFactory() {
-		return new ShannonFanoCodingFactory((IAnalyser) new Analyser(), new FileHandler(new Decompressor()));
+		return new ShannonFanoCodingFactory((IAnalyser) new Analyser(), new FileHandler());
 	}
 }
