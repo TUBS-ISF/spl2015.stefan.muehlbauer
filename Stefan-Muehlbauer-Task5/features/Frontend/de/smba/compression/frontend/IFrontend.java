@@ -5,6 +5,6 @@ package de.smba.compression.frontend;
  * @author Stefan Mühlbauer <s.muehlbauer@student.ucc.ie>
  *
  */
-public interface IFrontend extends Runnable {
+public interface IFrontend {
 	
 }
