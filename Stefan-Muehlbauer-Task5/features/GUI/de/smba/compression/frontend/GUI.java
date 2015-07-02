@@ -32,7 +32,6 @@ import de.smba.compression.coding.ICompressor;
 import de.smba.compression.file.IFileHandler;
 import de.smba.compression.file.FileHandler;
 import de.smba.compression.coding.Compressor;
-import de.smba.compression.coding.Decompressor;
 import de.smba.compression.frontend.benchmarking.AbstractGUIBenchmarker;
 import de.smba.compression.frontend.documentation.IGUIDocumenter;
 
@@ -70,7 +69,7 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		this.codingFactory = med.getCodingFactory();
 		
 		this.compressor = new Compressor();
-		this.fileHandler = new FileHandler(new Decompressor());
+		this.fileHandler = new FileHandler();
 
 		setTitle("CoCo Compression Console UI");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

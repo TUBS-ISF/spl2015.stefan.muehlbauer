@@ -27,13 +27,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import de.smba.compression.coding.IDecompressor;
+import de.smba.compression.coding.Decompressor;
 
 public class FileHandler implements IFileHandler {
 	
 	private IDecompressor decompressor;
 	
-	public FileHandler(IDecompressor decompressor) {
-		this.decompressor = decompressor;
+	public FileHandler() {
+		this.decompressor = new Decompressor();
 	}
 	
 	/**

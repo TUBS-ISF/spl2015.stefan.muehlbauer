@@ -29,52 +29,34 @@ import de.smba.compression.frontend.documentation.IConsoleDocumenter;
 public  class  Console  implements IFrontend {
 	
 
-	private IFileHandler fileHandler;
+	private static IFileHandler fileHandler = new FileHandler();
 
 	
-	private ICompressor compressor;
+	private static ICompressor compressor = new Compressor();
 
 	
-	private ICodingStore store;
+	private static  ICodingStore store = new CodingStore();
 
 	
-	private IConsoleDocumenter consoleDocumenter;
+	private static IConsoleDocumenter consoleDocumenter = new ConsoleDocumenter();
 
 	
-	private AbstractConsoleBenchmarker benchmarker;
-
-	
-
-	private List<ICodingFactory> codingFactories;
-
-	
-	private ICodingFactory currentCodingFactory;
+	private static AbstractConsoleBenchmarker benchmarker = new ConsoleBenchmarker();
 
 	
 
-	private Scanner in;
+	private static List<ICodingFactory> codingFactories = new LinkedList<ICodingFactory>();
+
+	private static ICodingFactory currentCodingFactory = getInitialCodingFactory();
+
+	private static Scanner in = new Scanner(System.in);
 
 	
-
-	public Console() {
-		
-		this.in = new Scanner(System.in);
-		this.store = new CodingStore();
-		this.fileHandler = new FileHandler(new Decompressor());
-		this.compressor = new Compressor();
-		this.consoleDocumenter = new ConsoleDocumenter();
-		this.benchmarker = new ConsoleBenchmarker();
-
-		this.codingFactories = new LinkedList<ICodingFactory>();
-		this.codingFactories.add(getInitialCodingFactory());
-		this.currentCodingFactory = this.codingFactories.get(0);
-	}
-	
-	protected static ICodingFactory getInitialCodingFactory() {
+	private static ICodingFactory getInitialCodingFactory() {
 		return CodingFactoryMediator.getCodingFactory();
 	}
 
-	public void delegateLoadCoding(String command) {
+	private static void delegateLoadCoding(String command) {
 		if (command.length() != 0) {
 
 			if (store.contains(command)) {
@@ -92,10 +74,10 @@ public  class  Console  implements IFrontend {
 
 	
 
-	public void delegateShow(String command) {
+	private static void delegateShow(String command) {
 		if (command.length() != 0) {
-			if (this.store.contains(command)) {
-				System.out.println(this.store.getPrintableCoding(command));
+			if (store.contains(command)) {
+				System.out.println(store.getPrintableCoding(command));
 			} else {
 				System.out.println("	No coding named'" + command
 						+ "' found. Please try again or generate coding!");
@@ -107,11 +89,11 @@ public  class  Console  implements IFrontend {
 
 	
 
-	public void delegateCompress(String command) {
+	private static void delegateCompress(String command) {
 
 		//TODO refactor
 		/*
-		if (this.compressor instanceof EmptyCompressor) {
+		if (compressor instanceof EmptyCompressor) {
 			System.out
 					.println("	Help on command compress is not available since the feature 'Compression' is not selected");
 			return;
@@ -123,20 +105,20 @@ public  class  Console  implements IFrontend {
 			String source = command.split(" ")[0];
 			String target = command.split(" ")[1];
 
-			Map<String, String> coding = this.currentCodingFactory
+			Map<String, String> coding = currentCodingFactory
 					.buildCoding(source);
 			store.addCoding(target, coding);
 
 			String toEncode = null;
 
 			try {
-				toEncode = this.fileHandler.loadFile(source);
+				toEncode = fileHandler.loadFile(source);
 			} catch (IOException e) {
 				System.out.println("	Path '" + source
 						+ "' seems to be invalid! Try again!");
 			}
 
-			String compressed = this.compressor.compress(coding, toEncode);
+			String compressed = compressor.compress(coding, toEncode);
 
 			/**
 			 * Benchmarking implementation optional
@@ -145,7 +127,7 @@ public  class  Console  implements IFrontend {
 
 			try {
 
-				this.fileHandler.storeCompressedFile(target, compressed,
+				fileHandler.storeCompressedFile(target, compressed,
 						store.getAnticoding(store.getCurrent()));
 				return;
 
@@ -163,16 +145,16 @@ public  class  Console  implements IFrontend {
 
 	
 
-	public void delegateDecompress(String command) {
+	private static void delegateDecompress(String command) {
 		if (command.length() != 0) {
 
 			String source = command.split(" ")[0];
 			String target = command.split(" ")[1];
 
-			String compressed = this.fileHandler.loadCompressedFile(source);
+			String compressed = fileHandler.loadCompressedFile(source);
 
 			try {
-				this.fileHandler.storeFile(target, compressed);
+				fileHandler.storeFile(target, compressed);
 			} catch (Exception e) {
 				System.out
 						.println("	Path '"
@@ -188,8 +170,8 @@ public  class  Console  implements IFrontend {
 
 	
 
-	public void run() {
-
+	public static void main(String args[]) {
+		
 		System.out.println("### Compression Console ###");
 		while (true) {
 			System.out.print("coco >> ");
