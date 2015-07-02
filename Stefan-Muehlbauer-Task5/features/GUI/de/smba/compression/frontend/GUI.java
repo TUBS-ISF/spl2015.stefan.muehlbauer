@@ -22,11 +22,17 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import de.smba.compression.frontend.documentation.GUIDocumenter;
+import de.smba.compression.frontend.benchmarking.GUIBenchmarker;
+import de.smba.compression.coding.CodingFactoryMediator;
 import de.smba.compression.coding.CodingStore;
 import de.smba.compression.coding.ICodingFactory;
 import de.smba.compression.coding.ICodingStore;
 import de.smba.compression.coding.ICompressor;
 import de.smba.compression.file.IFileHandler;
+import de.smba.compression.file.FileHandler;
+import de.smba.compression.coding.Compressor;
+import de.smba.compression.coding.Decompressor;
 import de.smba.compression.frontend.benchmarking.AbstractGUIBenchmarker;
 import de.smba.compression.frontend.documentation.IGUIDocumenter;
 
@@ -55,14 +61,16 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public GUI(IGUIDocumenter guiDocumenter, ICodingFactory factory, ICompressor compressor, IFileHandler fileHandler, AbstractGUIBenchmarker guiBenchmarker) {
+	public GUI() {
 
-		this.guiDocumenter = guiDocumenter;
-		this.guiBenchmarker = (AbstractGUIBenchmarker) guiBenchmarker;
+		this.guiDocumenter = new GUIDocumenter();
+		this.guiBenchmarker = new GUIBenchmarker();
 		
-		this.codingFactory = factory;
-		this.compressor = compressor;
-		this.fileHandler = fileHandler;
+		CodingFactoryMediator med = new CodingFactoryMediator();
+		this.codingFactory = med.getCodingFactory();
+		
+		this.compressor = new Compressor();
+		this.fileHandler = new FileHandler(new Decompressor());
 
 		setTitle("CoCo Compression Console UI");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -169,9 +177,10 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 		}
 	}
 
-	public void run() {
-		
-		this.setVisible(true);
+	public static void main(String[] args) {
+		GUI gui = new GUI();
+		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gui.setVisible(true);
 	}
 
 	class AboutAction extends AbstractAction {
