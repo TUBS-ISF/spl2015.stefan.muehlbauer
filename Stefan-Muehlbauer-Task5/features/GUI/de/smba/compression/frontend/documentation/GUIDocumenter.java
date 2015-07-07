@@ -5,7 +5,7 @@ import de.smba.compression.frontend.documentation.IGUIDocumenter;
 
 public class GUIDocumenter implements IDocumenter, IGUIDocumenter {
 
-	public EmptyDocumenter() {
+	public GUIDocumenter() {
 		
 	}
 	
