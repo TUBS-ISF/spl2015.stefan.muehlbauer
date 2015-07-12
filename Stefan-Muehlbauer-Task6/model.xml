@@ -3,7 +3,7 @@
 		<struct>
 			<and mandatory="true" name="FileCompressionTool">
 				<alt abstract="true" mandatory="true" name="Frontend">
-					<and mandatory="true" name="GUI">
+					<and mandatory="true" name="GUIFrontend">
 						<feature name="GUIBenchmarking"/>
 						<feature abstract="true" name="Update"/>
 						<feature abstract="true" name="Combination"/>
