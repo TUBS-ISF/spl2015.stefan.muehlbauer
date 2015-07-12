@@ -11,7 +11,7 @@ import de.smba.compression.file.IFileHandler;
 
 public  class  ShannonFanoCodingFactory  implements ICodingFactory {
 	
-	private IAnalyser analyser;
+	private Analyser analyser;
 
 	
 	private IFileHandler fileHandler;
@@ -19,7 +19,7 @@ public  class  ShannonFanoCodingFactory  implements ICodingFactory {
 	
 
 	public ShannonFanoCodingFactory() {
-		this.analyser = (IAnalyser) new Analyser();
+		this.analyser = new Analyser();
 		this.fileHandler = new FileHandler();
 	}
 
