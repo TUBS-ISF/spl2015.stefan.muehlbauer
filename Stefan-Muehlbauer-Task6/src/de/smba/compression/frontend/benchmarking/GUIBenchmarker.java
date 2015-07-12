@@ -12,12 +12,14 @@ public  class  GUIBenchmarker  extends AbstractGUIBenchmarker {
 
 	
 
+
 	@Override
 	public void compressBenchmarkNotification(String old, String news) {
 		
 		//foo
 		
 	}
+	
 
 
 }

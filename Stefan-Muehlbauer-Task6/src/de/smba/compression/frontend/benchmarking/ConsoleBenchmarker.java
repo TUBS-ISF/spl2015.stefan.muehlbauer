@@ -9,6 +9,7 @@ public  class  ConsoleBenchmarker  extends AbstractConsoleBenchmarker {
 		
 		return 0.0;
 	}
+	
 
 
 }

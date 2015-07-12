@@ -1,15 +1,20 @@
 import de.smba.compression.frontend.documentation.ConsoleDocumenter;
 
+//fertig
 
-//TODO documentation thereof
 public aspect ConsoleDocumentation {
 		
-	public void ConsoleDocumenter.documentAbout  () {
+	pointcut consoleDocumentationAbout():
+		execution(void ConsoleDocumenter.documentAbout());
+	
+	pointcut consoleDocumentationHelp(String command):
+		execution(String ConsoleDocumenter.documentHelp(String)) && args(command);
+	
+	void around(): consoleDocumentationAbout() {
 		System.out.println("	This is a console based frontend.");
 	}
 	
-	public String ConsoleDocumenter.documentHelp(String command) {
-		
+	String around(String command): consoleDocumentationHelp(command) {
 		StringBuffer returnString = new StringBuffer();
 		
 		if (command.length() != 0) {
@@ -37,7 +42,6 @@ public aspect ConsoleDocumentation {
 			returnString.append("Help available for load, huffman, show and exit.");
 		}
 		
-		return returnString.toString();
+		System.out.println(returnString);
 	}
-	
 }

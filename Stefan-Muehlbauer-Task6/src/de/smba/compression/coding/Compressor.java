@@ -18,5 +18,11 @@ public  class  Compressor  implements ICompressor {
 		return null;
 	}
 
-
+	public Compressor() {
+		
+	}
+	
+	public void identify() {
+		
+	}
 }
