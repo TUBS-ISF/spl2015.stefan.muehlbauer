@@ -21,7 +21,7 @@ import de.smba.compression.coding.huffman.HuffmanTree;
 public  class  HuffmanCodingFactory  implements ICodingFactory {
 	
 	
-	private IAnalyser analyser;
+	private Analyser analyser;
 
 	
 	private IFileHandler fileHandler;
@@ -29,7 +29,7 @@ public  class  HuffmanCodingFactory  implements ICodingFactory {
 	
 
 	public HuffmanCodingFactory() {
-		this.analyser = (IAnalyser) new Analyser();
+		this.analyser = new Analyser();
 		this.fileHandler = new FileHandler();
 	}
 
