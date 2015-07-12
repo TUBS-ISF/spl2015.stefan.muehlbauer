@@ -248,7 +248,7 @@ public  class  GUI  extends JFrame  implements IFrontend, ActionListener {
 
 		
 		
-		
+		//TODO delegate this method to an aspect
 		public void actionPerformed(ActionEvent arg0) {
 			GUI.this.guiDocumenter.documentAbout();
 		}
@@ -311,7 +311,8 @@ public  class  GUI  extends JFrame  implements IFrontend, ActionListener {
 	}
 
 	
-
+	
+	//TODO same
 	public void actionPerformed(ActionEvent e) {
 		if ("compress".equals(e.getActionCommand())) {
 

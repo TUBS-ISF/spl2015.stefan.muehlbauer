@@ -217,9 +217,7 @@ public   class   Console   implements IFrontend {
 									+ "' not available since the feature 'ConsoleDocumentation' is not selected.");
 				} else {
 				*/
-					String r = consoleDocumenter.documentHelp(line.substring(4)
-							.trim());
-					System.out.println(r);
+				consoleDocumenter.documentHelp(line.substring(4).trim());
 				/*
 				}
 				*/
