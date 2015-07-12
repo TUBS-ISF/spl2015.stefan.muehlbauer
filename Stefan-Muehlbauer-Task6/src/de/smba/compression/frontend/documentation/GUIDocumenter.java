@@ -16,6 +16,7 @@ public  class  GUIDocumenter  implements IDocumenter, IGUIDocumenter {
 		
 	}
 
+
 	
 
 	public String documentHelp(String command) {
