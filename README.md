@@ -16,4 +16,4 @@ Task 4: Variability implemented using Framework concepts/Inversion of Control
 
 Task 5: Variability implemented using *Feature-Oriented Programming (FOP)*
 
-Task 6: TBD
+Task 6: Variability implemented using *Aspect-Oriented Programming* (AOP) in AspectJ
