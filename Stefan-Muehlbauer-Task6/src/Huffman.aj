@@ -1,4 +1,11 @@
+import de.smba.compression.coding.CodingFactoryMediator;
+import de.smba.compression.coding.HuffmanCodingFactory;
+import de.smba.compression.coding.ICodingFactory;
+
+//fertig
 
 public aspect Huffman {
-	// TODO Auto-generated aspect
+	public static ICodingFactory CodingFactoryMediator.getCodingFactory() {
+		return new HuffmanCodingFactory();
+	}
 }

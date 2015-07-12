@@ -1,4 +1,12 @@
+import de.smba.compression.coding.CodingFactoryMediator;
+import de.smba.compression.coding.ShannonFanoCodingFactory;
+
+//fertig
 
 public aspect ShannonFano {
-	// TODO Auto-generated aspect
+	
+	public static ICodingFactory CodingFactoryMediator.getCodingFactory() {
+		return new ShannonFanoCodingFactory();
+	}
+	
 }
