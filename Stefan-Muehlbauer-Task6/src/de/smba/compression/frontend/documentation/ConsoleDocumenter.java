@@ -15,12 +15,13 @@ public  class  ConsoleDocumenter  implements IDocumenter, IConsoleDocumenter {
 	public void documentAbout() {
 		
 	}
-
 	
-
+	
+	
 	public String documentHelp(String command) {
 		return null;
 	}
+	
 
 
 }
