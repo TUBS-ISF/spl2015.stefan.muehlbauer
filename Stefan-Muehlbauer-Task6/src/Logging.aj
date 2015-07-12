@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import de.smba.compression.frontend.documentation.ConsoleDocumenter;
 import de.smba.compression.frontend.documentation.GUIDocumenter;;
 
+//fertig
+
 /**
  * This aspect implements the logging functionality described by the 'Logging' feature. 
  * Currently this aspect yields a printed line for every action performed.
@@ -15,44 +17,21 @@ import de.smba.compression.frontend.documentation.GUIDocumenter;;
  */
 public aspect Logging {
 
-	/* 
-	 * Compression pointcuts
+	/**
+	 * Point cut / advise for the benchmarking method
 	 */
-	pointcut consoleCompression(): execution(void Console.delegateCompress(String));
-	pointcut guiCompression(): execution(void GUI.actionPerformed(ActionEvent));
-	
-	/*
-	 * Documentation pointcuts
-	 */
-	pointcut helpConsole(): execution(String ConsoleDocumenter.documentHelp(String));
-	pointcut helpGUI(): execution(String GUIDocumenter.documentHelp(String));
-	
-	
-	/*
-	 * Frontend invocation pointcuts
-	 * TODO refactor/test
-	 */
-	pointcut mainConsole(): execution(public static void Console.main(String[]));
-	pointcut mainGUI(): execution(public static void GUI.main(String[]));
-	pointcut mainCallConsole(): call(public static void Console.main(String[]));
-	pointcut mainCallGUI(): call(public static void GUI.main(String[]));
-	
-	/*
-	 * ----------------------
-	 */
-	
-	/*
-	 * Advice definitions
-	 */
-	after(): consoleCompression() || guiCompression() {
+	after(): execution(double GUIBenchmarker.benchmark(String, String)) {
 		Calendar calendar = Calendar.getInstance();
-		Date now  = calendar.getTime();
+		Date now = calendar.getTime();
 		Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
 		
-		System.err.println("[Logging] [" + currentTimestamp.toString() + "] Compression performed!");
+		System.err.println("[Logging] [" + currentTimestamp.toString() + "] Benchmarking performed!");
 	}
 	
-	after(): helpConsole() || helpGUI() {
+	/**
+	 * Point cut / advice for the documentation method
+	 */
+	after(): execution(void GUIDocumenter.documentAbout()) {
 		Calendar calendar = Calendar.getInstance();
 		Date now = calendar.getTime();
 		Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
@@ -60,11 +39,15 @@ public aspect Logging {
 		System.err.println("[Logging] [" + currentTimestamp.toString() + "] Documentation performed!");
 	}
 	
-	after(): mainConsole() || mainGUI() || mainCallConsole() || mainCallGUI() {
+	/**
+	 * Point cut / advice for the compression method
+	 */
+	after(): execution(String Compressor.compress(Map<String, String>, String)) {
 		Calendar calendar = Calendar.getInstance();
 		Date now = calendar.getTime();
 		Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
 		
-		System.err.println("[Logging] [" + currentTimestamp.toString() + "] Frontend started!");
+		System.err.println("[Logging] [" + currentTimestamp.toString() + "] Compression performed!");
 	}
+
 }
