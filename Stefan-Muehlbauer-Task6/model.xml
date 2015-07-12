@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="4">
+		<struct>
+			<and mandatory="true" name="FileCompressionTool">
+				<alt abstract="true" mandatory="true" name="Frontend">
+					<and mandatory="true" name="GUI">
+						<feature name="GUIBenchmarking"/>
+						<feature abstract="true" name="Update"/>
+						<feature abstract="true" name="Combination"/>
+						<feature abstract="true" name="Comparison"/>
+						<feature name="GUIDocumentation"/>
+						<and name="Logging">
+							<feature abstract="true" name="Filter"/>
+						</and>
+					</and>
+					<and mandatory="true" name="Console">
+						<feature name="ConsoleDocumentation"/>
+						<feature name="ConsoleBenchmarking"/>
+					</and>
+				</alt>
+				<and abstract="true" mandatory="true" name="Library">
+					<feature mandatory="true" name="Analysis"/>
+					<feature mandatory="true" name="Decompression"/>
+					<feature name="Compression"/>
+					<alt mandatory="true" name="Encoding">
+						<feature mandatory="true" name="Huffman"/>
+						<feature mandatory="true" name="ShannonFano"/>
+						<feature abstract="true" mandatory="true" name="Arithmetic"/>
+					</alt>
+					<feature mandatory="true" name="Persistent"/>
+				</and>
+			</and>
+		</struct>
+		<constraints/>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>
