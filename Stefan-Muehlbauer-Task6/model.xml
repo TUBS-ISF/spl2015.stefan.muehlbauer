@@ -13,7 +13,7 @@
 							<feature abstract="true" name="Filter"/>
 						</and>
 					</and>
-					<and mandatory="true" name="Console">
+					<and mandatory="true" name="ConsoleFrontend">
 						<feature name="ConsoleDocumentation"/>
 						<feature name="ConsoleBenchmarking"/>
 					</and>
