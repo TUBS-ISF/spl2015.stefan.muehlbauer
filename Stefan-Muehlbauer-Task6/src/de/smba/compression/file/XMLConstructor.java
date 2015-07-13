@@ -1,13 +1,12 @@
-package de.smba.compression.file; 
+package de.smba.compression.file;
 
-import javax.xml.parsers.DocumentBuilder; 
-import javax.xml.parsers.DocumentBuilderFactory; 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.w3c.dom.Document; 
-import org.w3c.dom.Element; 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
-public  class  XMLConstructor {
-	
+public class XMLConstructor {
 
 	public static Document constructFile(String compressed, String anticoding) {
 
@@ -36,6 +35,5 @@ public  class  XMLConstructor {
 		}
 		return null;
 	}
-
 
 }

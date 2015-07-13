@@ -7,8 +7,7 @@ import java.util.Map;
  * @author Stefan Mühlbauer <s.muehlbauer@student.ucc.ie>
  *
  */
-public  interface  ICodingFactory {
-	
+public interface ICodingFactory {
 	
 	/**
 	 * Factory method to be implemented.
@@ -16,8 +15,6 @@ public  interface  ICodingFactory {
 	 * @return coding
 	 */
 	public Map<String, String> buildCoding(String path);
-
-	
 	
 	public Map<String, String> buildCodingFromText(String text);
 

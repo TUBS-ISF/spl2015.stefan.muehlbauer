@@ -1,6 +1,12 @@
-package de.smba.compression.coding; 
+package de.smba.compression.coding;
 
-
-public  class  CodingFactoryMediator {
+/**
+ * This class is advised by the aspects ShannonFano or Huffman in order to 
+ * install the corresponding CodingFactory.
+ * 
+ * @author Stefan Mühlbauer <s.muehlbauer@tu-bs.de>
+ *
+ */
+public class CodingFactoryMediator {
 
 }

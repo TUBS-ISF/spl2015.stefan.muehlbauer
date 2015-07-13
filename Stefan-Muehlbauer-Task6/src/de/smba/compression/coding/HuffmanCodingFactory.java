@@ -33,7 +33,7 @@ public  class  HuffmanCodingFactory  implements ICodingFactory {
 		this.fileHandler = new FileHandler();
 	}
 
-	
+		
 	/**
 	 * Builds a Huffman coding.
 	 * @return

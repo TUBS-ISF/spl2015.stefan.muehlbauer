@@ -1,20 +1,15 @@
-package de.smba.compression.coding; 
+package de.smba.compression.coding;
 
-import java.util.HashMap; 
-import java.util.Map; 
+import java.util.HashMap;
+import java.util.Map;
 
-public  class  CodingStore  implements ICodingStore {
-	
+public class CodingStore implements ICodingStore {
 
 	private static String current = null;
 
-	
 	private static Map<String, Map<String, String>> codings = new HashMap<String, Map<String, String>>();
 
-	
 	private static Map<String, Map<String, String>> anticodings = new HashMap<String, Map<String, String>>();
-
-	
 
 	public void addCoding(String identifier, Map<String, String> coding) {
 		codings.put(identifier, coding);
@@ -31,27 +26,19 @@ public  class  CodingStore  implements ICodingStore {
 		}
 	}
 
-	
-
 	public boolean contains(String identifier) {
 		return codings.containsKey(identifier);
 	}
 
-	
-
 	public String getCurrent() {
 		return current;
 	}
-
-	
 
 	public void setCurrent(String identifier) {
 		assert codings.containsKey(identifier);
 
 		current = identifier;
 	}
-
-	
 
 	public Map<String, String> getCoding(String identifier) {
 		if (codings.containsKey(identifier)) {
@@ -60,16 +47,12 @@ public  class  CodingStore  implements ICodingStore {
 		return null;
 	}
 
-	
-
 	public Map<String, String> getAnticoding(String identifier) {
 		if (anticodings.containsKey(identifier)) {
 			return anticodings.get(identifier);
 		}
 		return null;
 	}
-
-	
 
 	public String getPrintableCoding(String identifier) {
 		assert codings.containsKey(identifier);
@@ -86,6 +69,5 @@ public  class  CodingStore  implements ICodingStore {
 
 		return out.toString();
 	}
-
 
 }

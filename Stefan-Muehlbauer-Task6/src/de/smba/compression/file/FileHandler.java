@@ -1,47 +1,42 @@
-package de.smba.compression.file; 
+package de.smba.compression.file;
 
-import java.io.BufferedReader; 
-import java.io.ByteArrayInputStream; 
-import java.io.ByteArrayOutputStream; 
-import java.io.File; 
-import java.io.FileNotFoundException; 
-import java.io.FileReader; 
-import java.io.IOException; 
-import java.io.ObjectInputStream; 
-import java.io.ObjectOutputStream; 
-import java.io.PrintWriter; 
-import java.io.Serializable; 
-import java.io.UnsupportedEncodingException; 
-import java.util.Map; 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
-import javax.xml.parsers.DocumentBuilder; 
-import javax.xml.parsers.DocumentBuilderFactory; 
-import javax.xml.transform.Transformer; 
-import javax.xml.transform.TransformerFactory; 
-import javax.xml.transform.dom.DOMSource; 
-import javax.xml.transform.stream.StreamResult; 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
-import org.apache.commons.codec.binary.Base64; 
-import org.w3c.dom.Document; 
-import org.w3c.dom.Node; 
-import org.w3c.dom.NodeList; 
+import org.apache.commons.codec.binary.Base64;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import de.smba.compression.coding.IDecompressor; 
-import de.smba.compression.coding.Decompressor; 
+import de.smba.compression.coding.IDecompressor;
+import de.smba.compression.coding.Decompressor;
 
-public  class  FileHandler  implements IFileHandler {
-	
-	
+public class FileHandler implements IFileHandler {
+
 	private IDecompressor decompressor;
 
-	
-	
 	public FileHandler() {
 		this.decompressor = new Decompressor();
 	}
 
-	
-	
 	/**
 	 * Writes text to a specified file.
 	 * 
@@ -56,8 +51,6 @@ public  class  FileHandler  implements IFileHandler {
 		writer.write(text);
 		writer.close();
 	}
-
-	
 
 	/**
 	 * Stores a compressed text including the corresponding anticoding to an
@@ -89,9 +82,6 @@ public  class  FileHandler  implements IFileHandler {
 		}
 	}
 
-	
-
-
 	public String loadCompressedFile(String path) {
 		try {
 
@@ -101,14 +91,14 @@ public  class  FileHandler  implements IFileHandler {
 			Object deserialised = deserialise(anticodingSerialised);
 			Map<String, String> anticodingDeserialised = null;
 			if (deserialised instanceof Map<?, ?>) {
-				//unchecked
+				// unchecked
 				anticodingDeserialised = (Map<String, String>) deserialised;
 			} else {
 				throw new IOException();
 			}
 
-			String decompressed = this.decompressor.decompress(anticodingDeserialised,
-					compressed);
+			String decompressed = this.decompressor.decompress(
+					anticodingDeserialised, compressed);
 
 			return decompressed;
 
@@ -117,8 +107,6 @@ public  class  FileHandler  implements IFileHandler {
 		}
 		return null;
 	}
-
-	
 
 	/** Read the object from Base64 string. */
 	private static Object deserialise(String s) throws IOException,
@@ -131,8 +119,6 @@ public  class  FileHandler  implements IFileHandler {
 		return o;
 	}
 
-	
-
 	/** Write the object to a Base64 string. */
 	private static String serialise(Serializable o) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -141,8 +127,6 @@ public  class  FileHandler  implements IFileHandler {
 		oos.close();
 		return Base64.encodeBase64String(baos.toByteArray());
 	}
-
-	
 
 	public String getCompressed(String path) {
 		try {
@@ -174,8 +158,6 @@ public  class  FileHandler  implements IFileHandler {
 		return null;
 	}
 
-	
-
 	public String getAnticodingSerialised(String path) {
 		try {
 
@@ -206,8 +188,6 @@ public  class  FileHandler  implements IFileHandler {
 		return null;
 	}
 
-	
-	
 	public String loadFile(String path) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(path));
 		StringBuilder sb = new StringBuilder();
@@ -221,6 +201,5 @@ public  class  FileHandler  implements IFileHandler {
 		br.close();
 		return sb.toString();
 	}
-
 
 }

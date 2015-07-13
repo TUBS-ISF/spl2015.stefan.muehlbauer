@@ -1,18 +1,15 @@
-package de.smba.compression.coding; 
+package de.smba.compression.coding;
 
-import java.util.Map; 
+import java.util.Map;
 
-import de.smba.compression.coding.IDecompressor; 
+import de.smba.compression.coding.IDecompressor;
 
-public  class  Decompressor  implements IDecompressor {
-	
-	
+public class Decompressor implements IDecompressor {
+
 	public Decompressor() {
-		
+
 	}
 
-	
-	
 	/**
 	 * Decompresses a String based on a given coding.
 	 * 
@@ -20,8 +17,7 @@ public  class  Decompressor  implements IDecompressor {
 	 * @param toDecode
 	 * @return decoded
 	 */
-	public String decompress(Map<String, String> anticoding,
-			String toDecode) {
+	public String decompress(Map<String, String> anticoding, String toDecode) {
 		StringBuffer decoded = new StringBuffer();
 
 		String symbol = "";
@@ -37,6 +33,5 @@ public  class  Decompressor  implements IDecompressor {
 
 		return decoded.toString();
 	}
-
 
 }

@@ -1,32 +1,27 @@
-package de.smba.compression.coding; 
+package de.smba.compression.coding;
 
-import java.io.IOException; 
-import java.util.Map; 
+import java.io.IOException;
+import java.util.Map;
 
 import de.smba.compression.analysis.Analyser;
-import de.smba.compression.analysis.IAnalyser; 
-import de.smba.compression.coding.shannon.ShannonFano; 
+import de.smba.compression.coding.shannon.ShannonFano;
 import de.smba.compression.file.FileHandler;
-import de.smba.compression.file.IFileHandler; 
+import de.smba.compression.file.IFileHandler;
 
-public  class  ShannonFanoCodingFactory  implements ICodingFactory {
-	
+public class ShannonFanoCodingFactory implements ICodingFactory {
+
 	private Analyser analyser;
 
-	
 	private IFileHandler fileHandler;
-
-	
 
 	public ShannonFanoCodingFactory() {
 		this.analyser = new Analyser();
 		this.fileHandler = new FileHandler();
 	}
 
-	
-
 	/**
 	 * Builds a ShannonFano coding.
+	 * 
 	 * @param path
 	 * @return
 	 */
@@ -41,12 +36,9 @@ public  class  ShannonFanoCodingFactory  implements ICodingFactory {
 		return buildCodingFromText(text);
 	}
 
-	
-	
 	public Map<String, String> buildCodingFromText(String text) {
 		Map<String, Integer> frequency = this.analyser.analyseFrequency(text);
 		return ShannonFano.getCoding(frequency);
 	}
-
 
 }

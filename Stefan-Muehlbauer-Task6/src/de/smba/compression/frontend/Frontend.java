@@ -9,17 +9,17 @@ package de.smba.compression.frontend;
  *
  */
 public class Frontend {
-	
+
 	/**
 	 * This method is advised by either ConsoleFrontend or GUIFrontend.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		/**
-		 * This method is plain, since the run of the actual 
-		 * frontend run is woven by the corresponding aspects.
+		 * This method is plain, since the run of the actual frontend run is
+		 * woven by the corresponding aspects.
 		 */
 	}
 
 }
- 

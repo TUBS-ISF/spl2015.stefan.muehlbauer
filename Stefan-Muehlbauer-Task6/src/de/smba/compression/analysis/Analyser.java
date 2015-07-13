@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public  class  Analyser {
 	
-
 	/**
 	 * This method analyses the word frequency for a given String text.
 	 * @param text Text

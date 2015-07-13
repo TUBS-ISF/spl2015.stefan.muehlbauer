@@ -1,22 +1,20 @@
-package de.smba.compression.config; 
+package de.smba.compression.config;
 
+import java.io.File;
 
-import java.io.File; 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
-import javax.xml.parsers.DocumentBuilder; 
-import javax.xml.parsers.DocumentBuilderFactory; 
-
-import org.w3c.dom.Document; 
-import org.w3c.dom.Node; 
-import org.w3c.dom.NodeList; 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * 
  * @author Stefan Mühlbauer
  *
  */
-public  class  CompressionConfig {
-	
+public class CompressionConfig {
 
 	public static String getTestSetPath() {
 		try {
@@ -48,6 +46,5 @@ public  class  CompressionConfig {
 		}
 		return null;
 	}
-
 
 }

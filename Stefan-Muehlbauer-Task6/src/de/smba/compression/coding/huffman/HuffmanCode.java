@@ -1,11 +1,10 @@
-package de.smba.compression.coding.huffman; 
+package de.smba.compression.coding.huffman;
 
+import java.util.Map;
+import java.util.PriorityQueue;
 
-import java.util.Map; 
-import java.util.PriorityQueue; 
+public class HuffmanCode {
 
-public  class  HuffmanCode {
-	
 	public static HuffmanTree buildTree(Map<String, Integer> charFreqs) {
 		PriorityQueue<HuffmanTree> trees = new PriorityQueue<HuffmanTree>();
 
@@ -23,8 +22,6 @@ public  class  HuffmanCode {
 		}
 		return trees.poll();
 	}
-
-	
 
 	public static Map<String, String> exportCoding(HuffmanTree tree,
 			StringBuffer prefix, Map<String, String> container) {
@@ -50,6 +47,5 @@ public  class  HuffmanCode {
 		}
 		return null;
 	}
-
 
 }
