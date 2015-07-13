@@ -248,7 +248,6 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 
 	}
 
-	// TODO same
 	public void actionPerformed(ActionEvent e) {
 		if ("compress".equals(e.getActionCommand())) {
 

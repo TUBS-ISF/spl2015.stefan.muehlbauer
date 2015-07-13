@@ -78,13 +78,6 @@ public class Console implements IFrontend {
 
 	private static void delegateCompress(String command) {
 
-		// TODO refactor
-		/*
-		 * if (compressor instanceof EmptyCompressor) { System.out .println(
-		 * "	Help on command compress is not available since the feature 'Compression' is not selected"
-		 * ); return; }
-		 */
-
 		if (command.length() != 0) {
 
 			String source = command.split(" ")[0];
@@ -162,18 +155,7 @@ public class Console implements IFrontend {
 				System.out.println("	Terminating.");
 				System.exit(0);
 			} else if (line.startsWith("help")) {
-
-				// TODO Refactor
-				/*
-				 * if (consoleDocumenter instanceof EmptyDocumenter) {
-				 * System.out .println("	Command '" + line.split(" ")[0] +
-				 * "' not available since the feature 'ConsoleDocumentation' is not selected."
-				 * ); } else {
-				 */
 				consoleDocumenter.documentHelp(line.substring(4).trim());
-				/*
-				 * }
-				 */
 			} else if (line.startsWith("load")) {
 				delegateLoadCoding(line.substring(4).trim());
 			} else if (line.startsWith("show")) {
