@@ -1,9 +1,9 @@
-import de.smba.compression.frontend.GUI;
 import de.smba.compression.frontend.Frontend;
+import de.smba.compression.frontend.Console;
 
 //tested 13/07/2015
 
-public aspect GUIFrontend {
+public aspect ConsoleFrontend {
 	
 	/**
 	 * If the main method is executed, we infer the execution of the Console main() method.
@@ -12,7 +12,7 @@ public aspect GUIFrontend {
 		execution(void Frontend.main(String[]));
 	
 	void around(): mainExecution() {
-		GUI.main(new String[0]);
+		Console.main(new String[0]);
 		proceed();
 	}
 }
