@@ -1,6 +1,5 @@
 package de.smba.compression.frontend;
 
-//tested 13/07/2015
 
 /**
  * This class wraps the two different frontends GUI and Console.

@@ -260,9 +260,13 @@ public class GUI extends JFrame implements IFrontend, ActionListener {
 					.compress(coding, toCompress);
 
 			textArea_1.setText(compressed);
-
-			this.guiBenchmarker.compressBenchmarkNotification(toCompress,
+			
+			try {
+				this.guiBenchmarker.compressBenchmarkNotification(toCompress,
 					compressed);
+			} catch (NullPointerException ne) {
+				
+			}
 
 		}
 	}

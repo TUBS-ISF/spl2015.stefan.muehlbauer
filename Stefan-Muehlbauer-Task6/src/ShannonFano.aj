@@ -1,4 +1,5 @@
 import de.smba.compression.coding.CodingFactoryMediator;
+import de.smba.compression.coding.ICodingFactory;
 import de.smba.compression.coding.ShannonFanoCodingFactory;
 
 //fertig

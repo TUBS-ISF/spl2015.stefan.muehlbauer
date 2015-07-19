@@ -1,10 +1,12 @@
-import java.util.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
-import de.smba.compression.frontend.Console;
-import java.awt.event.ActionEvent;
-import de.smba.compression.frontend.documentation.ConsoleDocumenter;
-import de.smba.compression.frontend.documentation.GUIDocumenter;;
+import java.util.Date;
+import java.util.Map;
+
+import de.smba.compression.coding.Compressor;
+import de.smba.compression.frontend.GUI;
+import de.smba.compression.frontend.benchmarking.GUIBenchmarker;
+import de.smba.compression.frontend.documentation.GUIDocumenter;
 
 //fertig
 
@@ -18,36 +20,14 @@ import de.smba.compression.frontend.documentation.GUIDocumenter;;
 public aspect Logging {
 
 	/**
-	 * Point cut / advise for the benchmarking method
-	 */
-	after(): execution(double GUIBenchmarker.benchmark(String, String)) {
-		Calendar calendar = Calendar.getInstance();
-		Date now = calendar.getTime();
-		Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
-		
-		System.err.println("[Logging] [" + currentTimestamp.toString() + "] Benchmarking performed!");
-	}
-	
-	/**
-	 * Point cut / advice for the documentation method
-	 */
-	after(): execution(void GUIDocumenter.documentAbout()) {
-		Calendar calendar = Calendar.getInstance();
-		Date now = calendar.getTime();
-		Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
-		
-		System.err.println("[Logging] [" + currentTimestamp.toString() + "] Documentation performed!");
-	}
-	
-	/**
 	 * Point cut / advice for the compression method
 	 */
-	after(): execution(String Compressor.compress(Map<String, String>, String)) {
-		Calendar calendar = Calendar.getInstance();
+	before(): execution(void GUI.main(String[])) {
+		final Calendar calendar = Calendar.getInstance();
 		Date now = calendar.getTime();
 		Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
 		
-		System.err.println("[Logging] [" + currentTimestamp.toString() + "] Compression performed!");
+		System.err.println("[Logging] [" + currentTimestamp.toString() + "] Starting GUI!");
 	}
-
+	
 }

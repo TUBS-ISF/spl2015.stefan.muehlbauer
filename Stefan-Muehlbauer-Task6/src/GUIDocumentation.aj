@@ -9,6 +9,6 @@ public aspect GUIDocumentation {
 		execution(void GUIDocumenter.documentAbout());
 	
 	void around(): documentationGUI() {
-		javax.swing.JOptionPane.OptionPane.showMessageDialog(null, "This is a Java Swing based frontend.");
+		javax.swing.JOptionPane.showMessageDialog(null, "This is a Java Swing based frontend.");
 	}
 }
